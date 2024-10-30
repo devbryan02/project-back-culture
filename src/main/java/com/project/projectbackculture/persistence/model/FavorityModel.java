@@ -1,9 +1,7 @@
 package com.project.projectbackculture.persistence.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -11,13 +9,24 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 @Table(name = "favority")
 public class FavorityModel {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer favorityId;
+
+    //Relacion de muchos a uno con usuario
+    @ManyToOne(targetEntity = UserModel.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private UserModel userId;
+
+    //Relacion de muchos a uno con lugar
+    @ManyToOne(targetEntity = PlaceModel.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "place_id")
     private PlaceModel placeId;
+
     private LocalDate savedDate;
 
 }

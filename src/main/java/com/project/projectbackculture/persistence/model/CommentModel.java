@@ -16,8 +16,17 @@ public class CommentModel {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
+
+    // Relacion de muchos a uno con usuario
+    @ManyToOne(targetEntity = UserModel.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserModel userId;
+
+    //Relacion de muchos a uno con lugar
+    @ManyToOne(targetEntity = PlaceModel.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "place_id")
     private PlaceModel placeId;
+
     private String textComment;
     private LocalDate commentDate;
 
