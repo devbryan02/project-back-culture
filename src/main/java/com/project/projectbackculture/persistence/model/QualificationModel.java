@@ -30,4 +30,5 @@ public class QualificationModel {
     private Integer punctuation;
     private LocalDate qualificationDate;
 
+
 }

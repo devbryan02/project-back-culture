@@ -33,6 +33,7 @@ public class PlaceModel {
             joinColumns = @JoinColumn(name = "place_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+    @Builder.Default
     private Set<CategoryModel> categories = new HashSet<>();
 
     //Relacion de uno a muchos con Comentario model
@@ -72,7 +73,15 @@ public class PlaceModel {
             cascade = CascadeType.ALL,
             mappedBy = "placeId"
     )
+    @Builder.Default
     List<QualificationModel> qualifications = new ArrayList<>();
 
+    //Calculando la calificacion
+    public Double getPunctuation() {
+        return qualifications.stream()
+                .mapToInt(QualificationModel::getPunctuation)
+                .average()
+                .orElse(0.0);
+    }
 
 }
