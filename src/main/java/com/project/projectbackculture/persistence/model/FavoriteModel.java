@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(name = "favority")
-public class FavorityModel {
+public class FavoriteModel {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer favorityId;

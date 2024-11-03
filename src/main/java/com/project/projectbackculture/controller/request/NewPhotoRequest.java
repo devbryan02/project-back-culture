@@ -2,7 +2,7 @@ package com.project.projectbackculture.controller.request;
 
 import jakarta.validation.constraints.NotNull;
 
-public record PhotoRegistrationRequest(
+public record NewPhotoRequest(
         @NotNull(message = "description is required") String description
 ) {
 }

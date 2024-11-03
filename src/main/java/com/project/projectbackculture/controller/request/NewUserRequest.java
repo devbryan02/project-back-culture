@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 
-public record UserRegistrationRequest(
+public record NewUserRequest(
         @Email(message = "email format invalid") String email,
         @NotNull() String password,
         @NotEmpty String fullName

@@ -48,13 +48,13 @@ public class PlaceModel {
 
     //Relacion de uno a muchos con favorito
     @OneToMany(
-            targetEntity = FavorityModel.class,
+            targetEntity = FavoriteModel.class,
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "placeId"
     )
     @Builder.Default
-    private List<FavorityModel> favorities = new ArrayList<>();
+    private List<FavoriteModel> favorities = new ArrayList<>();
 
     //Relacion de uno a muchos con fotos
     @OneToMany(
