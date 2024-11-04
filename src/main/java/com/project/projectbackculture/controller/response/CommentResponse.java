@@ -1,8 +1,10 @@
 package com.project.projectbackculture.controller.response;
 
-import com.project.projectbackculture.persistence.model.CommentModel;
 
 public record CommentResponse(
-        CommentModel comment,
-        String message
-) { }
+        Integer commentId,
+        Integer userId,
+        Integer placeId,
+        String textComment,
+        String commentDate
+) {}

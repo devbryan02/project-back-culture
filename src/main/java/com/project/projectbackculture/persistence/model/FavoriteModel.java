@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class FavoriteModel {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer favorityId;
+    private Integer favoriteId;
 
     //Relacion de muchos a uno con usuario
     @ManyToOne(targetEntity = UserModel.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
