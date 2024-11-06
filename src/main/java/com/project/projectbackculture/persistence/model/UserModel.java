@@ -37,7 +37,7 @@ public class UserModel {
             targetEntity = CommentModel.class,
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "userId"
+            mappedBy = "user"
     )
     @Builder.Default
     private List<CommentModel> comments = new ArrayList<>();
@@ -47,7 +47,7 @@ public class UserModel {
             targetEntity = FavoriteModel.class,
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
-            mappedBy = "userId"
+            mappedBy = "user"
     )
     @Builder.Default
     private List<FavoriteModel> favorities = new ArrayList<>();
@@ -57,7 +57,7 @@ public class UserModel {
             targetEntity = QualificationModel.class,
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "userId"
+            mappedBy = "user"
     )
     @Builder.Default
     private List<QualificationModel> qualifications = new ArrayList<>();

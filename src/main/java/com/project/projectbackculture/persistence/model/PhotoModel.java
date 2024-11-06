@@ -3,7 +3,7 @@ package com.project.projectbackculture.persistence.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @AllArgsConstructor
@@ -19,10 +19,10 @@ public class PhotoModel {
 
     @ManyToOne(targetEntity = PlaceModel.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "place_id")
-    private PlaceModel placeId;
+    private PlaceModel place;
 
     private String pathPhoto;
     private String description;
-    private LocalDateTime uploadDate;
+    private LocalDate uploadDate;
 
 }

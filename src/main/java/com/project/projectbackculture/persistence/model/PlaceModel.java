@@ -23,6 +23,7 @@ public class PlaceModel {
     private String name;
     private String description;
     private String location;
+    private String distance;
     private boolean isVisible = true; // Valor por defecto en true
 
 
@@ -41,7 +42,7 @@ public class PlaceModel {
             targetEntity = CommentModel.class,
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "placeId"
+            mappedBy = "place"
     )
     @Builder.Default
     private List<CommentModel> comments = new ArrayList<>();
@@ -51,7 +52,7 @@ public class PlaceModel {
             targetEntity = FavoriteModel.class,
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "placeId"
+            mappedBy = "place"
     )
     @Builder.Default
     private List<FavoriteModel> favorities = new ArrayList<>();
@@ -61,7 +62,7 @@ public class PlaceModel {
             targetEntity = PhotoModel.class,
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "placeId"
+            mappedBy = "place"
     )
     @Builder.Default
     private List<PhotoModel> photos = new ArrayList<>();
@@ -71,13 +72,13 @@ public class PlaceModel {
             targetEntity = QualificationModel.class,
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
-            mappedBy = "placeId"
+            mappedBy = "place"
     )
     @Builder.Default
     List<QualificationModel> qualifications = new ArrayList<>();
 
     //Calculando la calificacion
-    public Double getPunctuation() {
+    public Double getPunctuationAverage() {
         return qualifications.stream()
                 .mapToInt(QualificationModel::getPunctuation)
                 .average()
