@@ -1,4 +1,4 @@
-package com.project.projectbackculture.controller.response;
+package com.project.projectbackculture.web.response;
 
 import java.util.List;
 

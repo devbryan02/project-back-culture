@@ -1,7 +1,7 @@
 package com.project.projectbackculture;
 
-import com.project.projectbackculture.controller.request.NewCategoryRequest;
-import com.project.projectbackculture.controller.response.CategoryResponse;
+import com.project.projectbackculture.web.request.NewCategoryRequest;
+import com.project.projectbackculture.web.response.CategoryResponse;
 import com.project.projectbackculture.service.implement.CategoryServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

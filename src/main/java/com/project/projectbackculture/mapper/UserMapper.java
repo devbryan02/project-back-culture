@@ -1,7 +1,7 @@
 package com.project.projectbackculture.mapper;
 
-import com.project.projectbackculture.controller.request.NewUserRequest;
-import com.project.projectbackculture.controller.response.UserResponse;
+import com.project.projectbackculture.web.request.NewUserRequest;
+import com.project.projectbackculture.web.response.UserResponse;
 import com.project.projectbackculture.persistence.model.UserModel;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

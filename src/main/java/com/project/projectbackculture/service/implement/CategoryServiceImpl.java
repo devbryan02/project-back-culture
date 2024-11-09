@@ -1,8 +1,8 @@
 package com.project.projectbackculture.service.implement;
 
 
-import com.project.projectbackculture.controller.request.NewCategoryRequest;
-import com.project.projectbackculture.controller.response.CategoryResponse;
+import com.project.projectbackculture.web.request.NewCategoryRequest;
+import com.project.projectbackculture.web.response.CategoryResponse;
 import com.project.projectbackculture.mapper.CategoryMapper;
 import com.project.projectbackculture.persistence.model.CategoryModel;
 import com.project.projectbackculture.persistence.repository.CategoryRepository;

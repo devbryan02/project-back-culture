@@ -1,7 +1,7 @@
 package com.project.projectbackculture.mapper;
 
-import com.project.projectbackculture.controller.request.NewCommentRequest;
-import com.project.projectbackculture.controller.response.CommentResponse;
+import com.project.projectbackculture.web.request.NewCommentRequest;
+import com.project.projectbackculture.web.response.CommentResponse;
 import com.project.projectbackculture.persistence.model.CommentModel;
 
 import java.time.LocalDate;
