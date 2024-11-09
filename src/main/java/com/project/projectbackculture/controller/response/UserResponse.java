@@ -1,9 +1,11 @@
 package com.project.projectbackculture.controller.response;
 
-import com.project.projectbackculture.persistence.model.UserModel;
+import lombok.Builder;
 
+@Builder
 public record UserResponse(
-        UserModel user,
-        String message
+        Integer userId,
+        String email,
+        String fullName
 ) {
 }

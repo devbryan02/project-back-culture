@@ -15,7 +15,6 @@ public class CategoryMapper {
                 .categoryId(categoryModel.getCategoryId())
                 .categoryName(categoryModel.getCategoryName())
                 .descripcion(categoryModel.getDescription())
-                .message("Registrado correctament")
                 .build();
     }
 

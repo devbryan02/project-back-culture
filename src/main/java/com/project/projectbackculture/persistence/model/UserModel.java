@@ -20,6 +20,8 @@ public class UserModel {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
+    @Column(unique = true, nullable = false)
+    private String username;
     private String fullName;
     @Column(unique = true)
     private String email;

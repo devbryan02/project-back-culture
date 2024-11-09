@@ -6,6 +6,5 @@ import lombok.Builder;
 public record CategoryResponse(
         Integer categoryId,
         String categoryName,
-        String descripcion,
-        String message
+        String descripcion
 ) { }
