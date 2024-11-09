@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 public interface UserService extends ServiceGeneral<UserResponse, NewUserRequest, Integer> {
 
 
-    Authentication auntenticateUser(String username, String password);
+    Authentication aunthenticateUser(String username, String password);
     AuthLoginResponse loginUser(AuthLoginRequest authLoginRequest);
 
 }

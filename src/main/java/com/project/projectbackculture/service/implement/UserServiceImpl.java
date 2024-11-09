@@ -84,11 +84,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public Optional<UserResponse> findById(Integer id) {
         Optional<UserModel> optionalUserById = userRepository.findById(id);
+        log.info("find user by Id {}", optionalUserById);
         return optionalUserById.map(UserMapper::toResponse);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        log.info("Starting loadUserByUsername {}", username);
 
         //Consultar a la base datos por username
         UserModel userModel =  userRepository
@@ -106,6 +109,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .forEach(permission -> authorities.add(
                         new SimpleGrantedAuthority(permission.getName())));
 
+        log.info("Authorities assigned for user {}: {}", userModel.getUsername(), authorities);
+
         return new User(
                 userModel.getUsername(),
                 userModel.getPassword(),
@@ -118,17 +123,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Authentication auntenticateUser(String username, String password) {
+    public Authentication aunthenticateUser(String username, String password) {
+
+        log.info("Starting authentication for username: {}", username);
 
         UserDetails userDetails = loadUserByUsername(username);
 
-        //Condicion la existencia del usuario
-        if(userDetails == null) throw new BadCredentialsException("Invalid username or password");
+        if (userDetails == null)
+            throw new BadCredentialsException("Invalid username or password");
 
-        //Condiciona la contraseña
-        if(!passwordEncoder.matches(password, userDetails.getPassword()))
+        if (!passwordEncoder.matches(password, userDetails.getPassword()))
             throw new BadCredentialsException("Invalid password");
 
+
+        log.info("Authentication successful for username: {}", username);
         return new UsernamePasswordAuthenticationToken(
                 username,
                 password,
@@ -141,12 +149,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String username = authLoginRequest.username();
         String password = authLoginRequest.password();
 
-        Authentication authentication = auntenticateUser(username, password);
+        log.info("Attempting login for username: {}", username);
+
+        Authentication authentication = aunthenticateUser(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtUtils.createToken(authentication);
 
-        return new AuthLoginResponse(username, "User loged successfuly",
+        return new AuthLoginResponse(username, "User logged in successfully",
                 accessToken, true);
     }
 
