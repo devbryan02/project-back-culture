@@ -1,4 +1,4 @@
-package com.project.projectbackculture.config.security;
+package com.project.projectbackculture.config;
 
 import com.project.projectbackculture.util.JwtUtils;
 import com.project.projectbackculture.util.JwtValidator;

@@ -1,4 +1,4 @@
-package com.project.projectbackculture.config.app;
+package com.project.projectbackculture.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
