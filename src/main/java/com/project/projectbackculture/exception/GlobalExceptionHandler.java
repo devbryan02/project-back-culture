@@ -1,5 +1,6 @@
 package com.project.projectbackculture.exception;
 
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -34,7 +35,21 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DuplicateEmailException.class)
-    public ResponseEntity<ApiError> handleDuplicateEmail(DuplicateEmailException ex, WebRequest request) {
+    public ResponseEntity<ApiError> handleDuplicateEmail(DuplicateEmailException ex,
+                                                         WebRequest request) {
+        ApiError apiError = new ApiError(
+                request.getDescription(false),
+                ex.getMessage(),
+                HttpStatus.CONFLICT.value(),
+                LocalDateTime.now(),
+                List.of(ex.getMessage())
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DuplicateUsernameException.class)
+    public ResponseEntity<ApiError> handleDuplicateUsername(DuplicateUsernameException ex,
+                                                            WebRequest request) {
         ApiError apiError = new ApiError(
                 request.getDescription(false),
                 ex.getMessage(),

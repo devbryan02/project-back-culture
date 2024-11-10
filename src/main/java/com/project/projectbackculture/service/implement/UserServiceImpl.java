@@ -1,5 +1,8 @@
 package com.project.projectbackculture.service.implement;
 
+import com.project.projectbackculture.exception.CustomException;
+import com.project.projectbackculture.exception.DuplicateEmailException;
+import com.project.projectbackculture.exception.DuplicateUsernameException;
 import com.project.projectbackculture.web.request.AuthLoginRequest;
 import com.project.projectbackculture.web.request.NewUserRequest;
 import com.project.projectbackculture.web.response.AuthLoginResponse;
@@ -12,6 +15,7 @@ import com.project.projectbackculture.persistence.model.UserModel;
 import com.project.projectbackculture.persistence.repository.UserRepository;
 import com.project.projectbackculture.service.interfaces.UserService;
 import com.project.projectbackculture.util.JwtUtils;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -47,25 +51,31 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserResponse save(NewUserRequest request) {
 
-        UserModel userModel = UserMapper.toModel(request, passwordEncoder);
-        log.info("mapping requestUser to userModel");
+        //Validacion duplicacion de email y username
+        validateUniqueConstraint(request);
 
-        //Setear valores por defecto
-        final Set<RoleModel> ROLE_USER_DEFAULT = GET_DEFAULT_ROLES();
-        userModel.setRegistrationDate(LocalDate.now());
-        userModel.setEnable(true);
-        userModel.setAccountNoLocked(true);
-        userModel.setAccountNoExpired(true);
-        userModel.setCredentialNoExpired(true);
-        userModel.setRoles(ROLE_USER_DEFAULT);
-        log.info("Saving default data user");
+        try {
 
-        UserModel savedUser = userRepository.save(userModel);
-        log.info("saved user to database");
+            UserModel userModel = UserMapper.toModel(request, passwordEncoder);
+            log.debug("Mapped NewUserRequest to UserModel successfully");
 
-        return UserMapper.toResponse(savedUser);
+            // Configurar valores por defecto
+            setUserWithDefaultValues(userModel);
+            log.debug("Enriched user with default values");
+
+            // Guardar y transformar la respuesta
+            UserModel savedUser = userRepository.save(userModel);
+            log.info("User created successfully with email: {}", savedUser.getEmail());
+
+            return UserMapper.toResponse(savedUser);
+
+        } catch (Exception e) {
+            log.error("Error while saving user with email: {}", request.email(), e);
+            throw new CustomException("Error al crear el usuario: " + e.getMessage());
+        }
     }
 
     @Override
@@ -161,8 +171,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 accessToken, true);
     }
 
-    public final Set<RoleModel> GET_DEFAULT_ROLES() {
-
+    @Override
+    public Set<RoleModel> setDefaultRoles() {
         //Permisos por defecto para usuarios
         final PermissionModel READ = PermissionModel.builder().name("READ").build();
         final PermissionModel SAVE = PermissionModel.builder().name("SAVE").build();
@@ -174,4 +184,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .build();
         return Set.of(USER);
     }
+
+    @Override
+    public void setUserWithDefaultValues(UserModel userModel) {
+        userModel.setRegistrationDate(LocalDate.now());
+        userModel.setEnable(true);
+        userModel.setAccountNoLocked(true);
+        userModel.setAccountNoExpired(true);
+        userModel.setCredentialNoExpired(true);
+        userModel.setRoles(setDefaultRoles());
+    }
+
+    @Override
+    public void validateUniqueConstraint(NewUserRequest newUserRequest) {
+
+        //Validar email duplicado
+        if(userRepository.existsByEmail(newUserRequest.email())){
+            log.warn("Attempt to register duplicate email: {}", newUserRequest.email());
+            throw new DuplicateEmailException(newUserRequest.email());
+        }
+
+        //Validar username duplicado
+        if(userRepository.existsByUsername(newUserRequest.username())){
+            log.warn("Attempt to register duplicate username: {}", newUserRequest.username());
+            throw new DuplicateUsernameException(newUserRequest.username());
+        }
+
+
+    }
+
 }
