@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         final Set<RoleModel> ROLE_USER_DEFAULT = GET_DEFAULT_ROLES();
         userModel.setEnable(true);
         userModel.setAccountNoLocked(true);
-        userModel.setAccountNoLocked(true);
+        userModel.setAccountNoExpired(true);
         userModel.setCredentialNoExpired(true);
         userModel.setRoles(ROLE_USER_DEFAULT);
         log.info("Saving default data user");
@@ -118,8 +118,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 userModel.isAccountNoExpired(),
                 userModel.isAccountNoLocked(),
                 userModel.isCredentialNoExpired(),
-                authorities
-        );
+                authorities);
     }
 
     @Override
