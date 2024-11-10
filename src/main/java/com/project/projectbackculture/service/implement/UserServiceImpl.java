@@ -25,6 +25,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         //Setear valores por defecto
         final Set<RoleModel> ROLE_USER_DEFAULT = GET_DEFAULT_ROLES();
+        userModel.setRegistrationDate(LocalDate.now());
         userModel.setEnable(true);
         userModel.setAccountNoLocked(true);
         userModel.setAccountNoExpired(true);

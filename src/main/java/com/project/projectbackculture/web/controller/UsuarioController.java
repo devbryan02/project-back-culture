@@ -3,6 +3,7 @@ package com.project.projectbackculture.web.controller;
 import com.project.projectbackculture.service.implement.UserServiceImpl;
 import com.project.projectbackculture.web.request.NewUserRequest;
 import com.project.projectbackculture.web.response.UserResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +22,11 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(@RequestBody NewUserRequest newUserRequest) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody @Valid NewUserRequest newUserRequest) {
         UserResponse userResponse = userService.save(newUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
+
 
 }
 
