@@ -8,5 +8,6 @@ public record PlaceResponse(
         Integer placeId,
         String name,
         String description,
-        String location
+        String location,
+        String distance
 ) { }
