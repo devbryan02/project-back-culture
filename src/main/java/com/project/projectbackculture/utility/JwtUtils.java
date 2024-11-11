@@ -1,4 +1,4 @@
-package com.project.projectbackculture.util;
+package com.project.projectbackculture.utility;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

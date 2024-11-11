@@ -1,7 +1,7 @@
 package com.project.projectbackculture.config;
 
-import com.project.projectbackculture.util.JwtUtils;
-import com.project.projectbackculture.util.JwtValidator;
+import com.project.projectbackculture.utility.JwtUtils;
+import com.project.projectbackculture.utility.JwtValidator;
 import com.project.projectbackculture.service.implement.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

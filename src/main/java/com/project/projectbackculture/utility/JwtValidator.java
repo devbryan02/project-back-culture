@@ -1,4 +1,4 @@
-package com.project.projectbackculture.util;
+package com.project.projectbackculture.utility;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;

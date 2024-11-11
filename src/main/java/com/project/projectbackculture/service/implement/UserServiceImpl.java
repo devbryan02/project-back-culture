@@ -14,7 +14,7 @@ import com.project.projectbackculture.persistence.model.RoleModel;
 import com.project.projectbackculture.persistence.model.UserModel;
 import com.project.projectbackculture.persistence.repository.UserRepository;
 import com.project.projectbackculture.service.interfaces.UserService;
-import com.project.projectbackculture.util.JwtUtils;
+import com.project.projectbackculture.utility.JwtUtils;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;

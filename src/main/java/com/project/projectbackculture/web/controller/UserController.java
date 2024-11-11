@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/users")
-public class UsuarioController {
+public class UserController {
 
     private final UserServiceImpl userService;
 
-    public UsuarioController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 
