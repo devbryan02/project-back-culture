@@ -112,7 +112,7 @@ public class GlobalExceptionHandler {
 
         // Personalizar mensaje segun tipo de exception
         if (ex instanceof BadCredentialsException) {
-            message = "Usuario o contraseña incorrectos";
+            message = "Contraseña incorrecta";
         } else if (ex instanceof LockedException) {
             message = "Cuenta bloqueada";
         } else if (ex instanceof DisabledException) {
@@ -122,7 +122,7 @@ public class GlobalExceptionHandler {
         } else if (ex instanceof CredentialsExpiredException) {
             message = "Credenciales expiradas";
         } else if (ex instanceof UsernameNotFoundException) {
-            message = "Usuario no encontrado";
+            message = "El usuario no está registrado";
         }
 
         log.info("Auhthentication error: {} - {} ",message, ex.getMessage());

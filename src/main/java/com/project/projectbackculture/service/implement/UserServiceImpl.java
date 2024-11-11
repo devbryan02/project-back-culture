@@ -15,7 +15,6 @@ import com.project.projectbackculture.persistence.model.UserModel;
 import com.project.projectbackculture.persistence.repository.UserRepository;
 import com.project.projectbackculture.service.interfaces.UserService;
 import com.project.projectbackculture.utility.JwtUtils;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,6 +27,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         log.info("Starting loadUserByUsername {}", username);
@@ -134,6 +135,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public Authentication aunthenticateUser(String username, String password) {
 
         log.info("Starting authentication for username: {}", username);
@@ -155,6 +157,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public AuthLoginResponse loginUser(AuthLoginRequest authLoginRequest) {
 
         String username = authLoginRequest.username();
