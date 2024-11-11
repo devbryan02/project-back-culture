@@ -3,9 +3,11 @@ package com.project.projectbackculture.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.*;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.project.projectbackculture.exception.JWTValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class JwtUtils {
 
     //variables en entorno del sistema 🔒
@@ -57,8 +60,21 @@ public class JwtUtils {
                     .withIssuer(this.userGenarator)
                     .build();
             return verifier.verify(token);
-        } catch (JWTVerificationException exception) {
-            throw new JWTVerificationException("Token invalid, no authorized");
+        } catch (AlgorithmMismatchException e) {
+            log.error("Algorithm mismatch in JWT validation: {}", e.getMessage());
+            throw new JWTValidationException("El algoritmo del token no coincide");
+        } catch (SignatureVerificationException e) {
+            log.error("Invalid JWT signature: {}", e.getMessage());
+            throw new JWTValidationException("La firma del token es inválida");
+        } catch (TokenExpiredException e) {
+            log.error("JWT token expired: {}", e.getMessage());
+            throw new JWTValidationException("El token ha expirado");
+        } catch (InvalidClaimException e) {
+            log.error("Invalid claim in JWT: {}", e.getMessage());
+            throw new JWTValidationException("El token contiene claims inválidos");
+        } catch (JWTVerificationException e) {
+            log.error("JWT verification failed: {}", e.getMessage());
+            throw new JWTValidationException("Token inválido");
         }
     }
 

@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public UserResponse save(NewUserRequest request) {
 
-        //Validacion duplicacion de email y username
+        //Valida la duplicacion de email y username
         validateUniqueConstraint(request);
 
         try {
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             UserModel userModel = UserMapper.toModel(request, passwordEncoder);
             log.debug("Mapped NewUserRequest to UserModel successfully");
 
-            // Configurar valores por defecto
+            //Asigna valores por defecto al usuario
             setUserWithDefaultValues(userModel);
             log.debug("Enriched user with default values");
 
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         } catch (Exception e) {
             log.error("Error while saving user with email: {}", request.email(), e);
-            throw new CustomException("Error al crear el usuario: " + e.getMessage());
+            throw new CustomException("Error while create user: " + e.getMessage());
         }
     }
 
