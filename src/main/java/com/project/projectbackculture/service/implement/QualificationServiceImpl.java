@@ -13,8 +13,10 @@ import com.project.projectbackculture.web.request.NewQualificationRequest;
 import com.project.projectbackculture.web.response.QualificationResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +37,7 @@ public class QualificationServiceImpl implements QualficationService {
     }
 
     @Override
+    @Transactional
     public QualificationResponse save(NewQualificationRequest request) {
 
         log.info("Saving new qualification {}", request);
@@ -48,9 +51,10 @@ public class QualificationServiceImpl implements QualficationService {
         checkExistingQualification(userModel.getUserId(), placeModel.getPlaceId());
 
         QualificationModel qualificationModel = QualificationMapper.toModel(request);
-        //Asignar el usuario y lugar
+        //Asignar el usuario, lugar y fecha
         qualificationModel.setUser(userModel);
         qualificationModel.setPlace(placeModel);
+        qualificationModel.setQualificationDate(LocalDate.now());
 
         QualificationModel savedQualificationModel = qualificationRepository.save(qualificationModel);
         log.info("Saved qualification {}", savedQualificationModel);
@@ -79,18 +83,21 @@ public class QualificationServiceImpl implements QualficationService {
     }
 
     @Override
+    @Transactional
     public void checkExistingQualification(Integer userId, Integer placeId) {
         boolean exists = qualificationRepository.existsByUserUserIdAndPlacePlaceId(userId, placeId);
         if (exists) throw new CustomException("The user has already rated this place");
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserModel findUser(Integer userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException("User not found"));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PlaceModel findPlace(Integer placeId) {
         return placeRepository.findById(placeId)
                 .orElseThrow(() -> new CustomException("Place not found"));
