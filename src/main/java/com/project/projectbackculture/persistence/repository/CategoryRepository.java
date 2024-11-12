@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface CategoryRepository extends JpaRepository<CategoryModel, Integer> {
 
     // no hay mas metodos para category model
+    boolean existsByCategoryName(String name);
 
 }

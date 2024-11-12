@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Optional<UserResponse> update(NewUserRequest request, Integer integer) {
+    public UserResponse update(NewUserRequest request, Integer integer) {
         return null;
     }
 

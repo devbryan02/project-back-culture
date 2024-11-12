@@ -48,7 +48,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public Optional<PlaceResponse> update(NewPlaceRequest request, Integer integer) {
+    public PlaceResponse update(NewPlaceRequest request, Integer integer) {
         return null;
     }
 
