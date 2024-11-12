@@ -9,5 +9,6 @@ public record PlaceResponse(
         String name,
         String description,
         String location,
-        String distance
+        String distance,
+        Double punctuationAverage
 ) { }

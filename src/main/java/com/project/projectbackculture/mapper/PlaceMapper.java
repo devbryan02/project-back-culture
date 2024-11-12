@@ -12,10 +12,12 @@ public class PlaceMapper {
         if (placeModel == null) return null;
 
         return PlaceResponse.builder()
+                .placeId(placeModel.getPlaceId())
                 .name(placeModel.getName())
                 .description(placeModel.getDescription())
                 .location(placeModel.getLocation())
                 .distance(placeModel.getDistance())
+                .punctuationAverage(placeModel.getPunctuationAverage())
                 .build();
     }
 

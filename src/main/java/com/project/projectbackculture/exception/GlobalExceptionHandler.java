@@ -170,4 +170,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<ApiError> handleCategoryNotFoundException(CategoryNotFoundException ex,
+                                                                    WebRequest request) {
+        log.error("Category not found: {}", ex.getMessage());
+
+        ApiError apiError = new ApiError(
+                request.getDescription(false),
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now(),
+                List.of(ex.getMessage())
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+    }
+
 }
