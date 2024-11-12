@@ -1,8 +1,11 @@
 package com.project.projectbackculture.web.response;
 
 
+import lombok.Builder;
+
+@Builder
 public record QualificationResponse(
-        Integer QualificationId,
+        Integer qualificationId,
         Integer userId,
         Integer placeId,
         Integer punctuation

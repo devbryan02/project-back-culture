@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface QualificationRepository extends JpaRepository<QualificationModel, Integer> {
+
+    boolean existsByUserUserIdAndPlacePlaceId(Integer userId, Integer placeId);
 }
