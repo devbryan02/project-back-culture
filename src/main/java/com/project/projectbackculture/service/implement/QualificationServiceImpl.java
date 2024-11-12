@@ -63,7 +63,7 @@ public class QualificationServiceImpl implements QualficationService {
     }
 
     @Override
-    public QualificationResponse update(NewQualificationRequest request, Integer integer) {
+    public Optional<QualificationResponse> update(NewQualificationRequest request, Integer integer) {
         return null;
     }
 

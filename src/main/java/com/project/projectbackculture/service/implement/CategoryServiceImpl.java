@@ -1,6 +1,7 @@
 package com.project.projectbackculture.service.implement;
 
 
+import com.project.projectbackculture.exception.CustomException;
 import com.project.projectbackculture.web.request.NewCategoryRequest;
 import com.project.projectbackculture.web.response.CategoryResponse;
 import com.project.projectbackculture.mapper.CategoryMapper;
@@ -36,22 +37,38 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse update(NewCategoryRequest request, Integer id) {
-        return null;
+    public Optional<CategoryResponse> update(NewCategoryRequest request, Integer id) {
+
+        if(id == null) throw  new CustomException("El id no debe ser nulo");
+
+        return categoryRepository.findById(id)
+                .map(category -> {
+                    CategoryMapper.updateCategory(category, request);
+                    categoryRepository.save(category);
+                    return CategoryMapper.toResponse(category);
+                });
     }
 
     @Override
     public void delete(Integer id) {
-
+        if(id != null) categoryRepository.deleteById(id);
     }
 
     @Override
     public List<CategoryResponse> findAll() {
-        return List.of();
+        return categoryRepository.findAll()
+                .stream()
+                .map(CategoryMapper::toResponse)
+                .toList();
     }
 
     @Override
     public Optional<CategoryResponse> findById(Integer id) {
-        return Optional.empty();
+
+        if(id == null) return Optional.empty();
+
+        return categoryRepository
+                .findById(id)
+                .map(CategoryMapper::toResponse);
     }
 }

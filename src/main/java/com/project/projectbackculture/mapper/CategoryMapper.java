@@ -28,4 +28,11 @@ public class CategoryMapper {
                 .description(newCategoryRequest.description())
                 .build();
     }
+
+    public static void updateCategory(CategoryModel categoryModel,
+                                      NewCategoryRequest newCategoryRequest) {
+        categoryModel.setCategoryName(newCategoryRequest.categoryName());
+        categoryModel.setDescription(newCategoryRequest.description());
+    }
+
 }
