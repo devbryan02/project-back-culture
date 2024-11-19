@@ -4,7 +4,6 @@ import com.project.projectbackculture.service.implement.CategoryServiceImpl;
 import com.project.projectbackculture.web.request.NewCategoryRequest;
 import com.project.projectbackculture.web.response.CategoryResponse;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

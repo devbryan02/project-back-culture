@@ -11,18 +11,19 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
-@Table(name = "photo")
-public class PhotoModel {
+@Table(name = "image")
+public class ImageModel {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer photoId;
+    private Integer imageId;
 
     @ManyToOne(targetEntity = PlaceModel.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "place_id")
     private PlaceModel place;
 
-    private String pathPhoto;
     private String description;
+    private String publicId;
+    private String secureUrl;
     private LocalDate uploadDate;
 
 }

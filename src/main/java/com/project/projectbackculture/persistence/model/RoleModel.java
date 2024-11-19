@@ -1,12 +1,9 @@
 package com.project.projectbackculture.persistence.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.HashSet;
 import java.util.Set;
-
-// Roles XDXDXDXD
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
@@ -17,22 +14,23 @@ import java.util.Set;
 @Table(name = "role")
 public class RoleModel {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roleId;
 
     @Column(name = "role_name")
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = { CascadeType.PERSIST, CascadeType.MERGE }
+    )
     @JoinTable(
-            name = "role_permissions",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id")
+        name = "role_permissions",
+        joinColumns = @JoinColumn(name = "role_id"),
+        inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
     @Builder.Default
     private Set<PermissionModel> permissions = new HashSet<>();
-
 }
-
-

@@ -59,13 +59,13 @@ public class PlaceModel {
 
     //Relacion de uno a muchos con fotos
     @OneToMany(
-            targetEntity = PhotoModel.class,
+            targetEntity = ImageModel.class,
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "place"
     )
     @Builder.Default
-    private List<PhotoModel> photos = new ArrayList<>();
+    private List<ImageModel> photos = new ArrayList<>();
 
     //Relacion de uno a muchos con calificacion
     @OneToMany(

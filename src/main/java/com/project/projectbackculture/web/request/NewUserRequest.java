@@ -17,10 +17,10 @@ public record NewUserRequest(
         String username,
 
         @NotNull(message = "password no debe ser nulo")
-        @NotEmpty(message = "password no debe ser nulo")
+        @NotEmpty(message = "password no debe ser vacio")
         String password,
 
         @NotNull(message = "fullname no debe ser nulo")
-        @NotEmpty(message = "fullname no debe ser nulo")
+        @NotEmpty(message = "fullname no debe ser vacio")
         String fullName
 ) { }
