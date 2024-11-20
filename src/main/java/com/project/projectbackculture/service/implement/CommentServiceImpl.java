@@ -47,6 +47,9 @@ public class CommentServiceImpl implements ComentService {
             UserModel usermodel = findUserById(userId);
             PlaceModel placeModel = findPlaceById(placeId);
 
+            //Valida si ya existe un comentario de un usuario en lugar existente
+            checkExistingComment(usermodel.getUserId(), placeModel.getPlaceId());
+
             // Convierte el request en modelo
             CommentModel commentModel = CommentMapper.toModel(request);
             commentModel.setUser(usermodel);
@@ -79,6 +82,12 @@ public class CommentServiceImpl implements ComentService {
     public UserModel findUserById(Integer userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException("User not found"));
+    }
+
+    @Override
+    public void checkExistingComment(Integer userId, Integer placeId) {
+        boolean exists = commentRepository.existsByUserUserIdAndPlacePlaceId(userId, placeId);
+        if(exists) throw new CustomException("The user commenr already exists");
     }
 
     @Override

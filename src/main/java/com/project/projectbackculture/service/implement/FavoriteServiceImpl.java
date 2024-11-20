@@ -13,6 +13,7 @@ import com.project.projectbackculture.web.request.NewFavoriteRequest;
 import com.project.projectbackculture.web.response.FavoriteResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,16 +36,20 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
+    @Transactional
     public FavoriteResponse addFavorite(Integer userId, Integer placeId) {
 
-        //Valida si un user ya tiene guardado el favorito un lugar
-        checkExistingFavorite(userId, placeId);
+        //Valida los params
+        validateIDRequest(userId, placeId);
 
         try{
 
             //Buscar al user y lugar por sus IDs
             UserModel userModel = findByUserId(userId);
             PlaceModel placeModel = findByPlaceId(placeId);
+
+            //Valida si un user ya tiene guardado el favorito un lugar
+            checkExistingFavorite(userModel.getUserId(), placeModel.getPlaceId());
 
             // Setea el user y place al modelo favorite
             FavoriteModel favoriteModel = new FavoriteModel();
@@ -80,6 +85,12 @@ public class FavoriteServiceImpl implements FavoriteService {
     public PlaceModel findByPlaceId(Integer placeId) {
         return placeRepository.findById(placeId)
                 .orElseThrow(() -> new CustomException("Place not found"));
+    }
+
+    @Override
+    public void validateIDRequest(Integer userId, Integer placeId) {
+        if(userId == null) throw new CustomException("UserId is required");
+        if(placeId == null) throw new CustomException("PlaceId is required");
     }
 
     @Override

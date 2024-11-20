@@ -13,5 +13,6 @@ public interface FavoriteService extends ServiceGeneral<FavoriteResponse,NewFavo
     void checkExistingFavorite(Integer userId, Integer placeId);
     UserModel findByUserId(Integer userId);
     PlaceModel findByPlaceId(Integer placeId);
+    void validateIDRequest(Integer userId, Integer placeId);
 
 }

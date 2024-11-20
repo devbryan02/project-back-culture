@@ -12,4 +12,5 @@ public interface ComentService extends ServiceGeneral<CommentResponse,NewComment
     void validateIdsRequest(Integer userId, Integer placeId);
     PlaceModel findPlaceById(Integer placeId);
     UserModel findUserById(Integer userId);
+    void checkExistingComment(Integer userId, Integer placeId);
 }
