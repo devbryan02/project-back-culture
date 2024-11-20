@@ -62,7 +62,7 @@ public class CommentServiceImpl implements ComentService {
 
         }catch (Exception e){
             log.error(e.getMessage());
-            throw new CustomException("Error while adding comment");
+            throw new CustomException("Error while adding comment "+e.getMessage());
         }
     }
 

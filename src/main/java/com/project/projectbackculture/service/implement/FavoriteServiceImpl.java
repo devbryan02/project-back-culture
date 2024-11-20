@@ -64,7 +64,7 @@ public class FavoriteServiceImpl implements FavoriteService {
             return FavoriteMapper.toResponse(savedModel);
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new CustomException("Error while adding favorite");
+            throw new CustomException("Error while adding favorite "+ e.getMessage());
         }
 
     }

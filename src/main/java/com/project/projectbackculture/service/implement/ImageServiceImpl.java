@@ -64,7 +64,7 @@ public class ImageServiceImpl implements PhotoService {
             return ImageMapper.toResponse(savedPhoto);
         } catch (IOException e) {
             log.error("Error al registrar foto: {}", e.getMessage());
-            throw new CustomException("Erro al registrar foto");
+            throw new CustomException("Error al registrar foto "+e.getMessage());
         }
     }
 
