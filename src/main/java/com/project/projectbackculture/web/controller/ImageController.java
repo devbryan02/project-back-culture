@@ -2,7 +2,7 @@ package com.project.projectbackculture.web.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.projectbackculture.service.implement.PhotoServiceImpl;
+import com.project.projectbackculture.service.implement.ImageServiceImpl;
 import com.project.projectbackculture.web.request.NewPhotoRequest;
 import com.project.projectbackculture.web.response.PhotoResponse;
 import jakarta.validation.Valid;
@@ -15,9 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/image")
 public class ImageController {
 
-    private final PhotoServiceImpl photoService;
+    private final ImageServiceImpl photoService;
 
-    public ImageController(PhotoServiceImpl photoService) {
+    public ImageController(ImageServiceImpl photoService) {
         this.photoService = photoService;
     }
 

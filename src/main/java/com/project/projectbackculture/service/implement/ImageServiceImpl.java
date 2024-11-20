@@ -22,13 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Slf4j
-public class PhotoServiceImpl implements PhotoService {
+public class ImageServiceImpl implements PhotoService {
 
     private final ImageRepository imageRepository;
     private final PlaceRepository placeRepository;
     private final CloudinaryComponent cloudinaryComponent;
 
-    public PhotoServiceImpl(
+    public ImageServiceImpl(
         ImageRepository imageRepository,
         PlaceRepository placeRepository,
         CloudinaryComponent cloudinaryComponent
