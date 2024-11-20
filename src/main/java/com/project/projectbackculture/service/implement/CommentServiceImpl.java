@@ -13,6 +13,7 @@ import com.project.projectbackculture.web.request.NewCommentRequest;
 import com.project.projectbackculture.web.response.CommentResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +35,7 @@ public class CommentServiceImpl implements ComentService {
     }
 
     @Override
+    @Transactional
     public CommentResponse addComment(NewCommentRequest request, Integer userId, Integer placeId) {
 
         //validadmos el request de IDs
