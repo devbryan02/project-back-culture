@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FavoriteRepository extends JpaRepository<FavoriteModel, Integer> {
+
+    boolean existsByUserUserIdAndPlacePlaceId(Integer userId, Integer placeId);
 }
