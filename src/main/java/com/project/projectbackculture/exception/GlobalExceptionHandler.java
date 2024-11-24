@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
                 "Ocurrió un error inesperado",
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 LocalDateTime.now(),
-                List.of(ex.getMessage())
+                List.of(ex.getMessage() != null ? ex.getMessage() : "Error desconocido")
         );
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }

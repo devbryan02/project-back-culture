@@ -8,6 +8,7 @@ import com.project.projectbackculture.persistence.repository.CategoryRepository;
 import com.project.projectbackculture.persistence.repository.PlaceRepository;
 import com.project.projectbackculture.service.interfaces.PlaceService;
 import com.project.projectbackculture.web.request.NewPlaceRequest;
+import com.project.projectbackculture.web.response.PlacePopularResponse;
 import com.project.projectbackculture.web.response.PlaceResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,8 @@ public class PlaceServiceImpl implements PlaceService {
         return PlaceMapper.toResponse(savedPlace);
     }
 
-    private Set<CategoryModel> fetchCategoriesByIds(Set<Integer> categoryIds) {
+    @Override
+    public Set<CategoryModel> fetchCategoriesByIds(Set<Integer> categoryIds) {
         if (categoryIds == null || categoryIds.isEmpty()) {
             return new HashSet<>();
         }
@@ -53,6 +55,15 @@ public class PlaceServiceImpl implements PlaceService {
             throw new CategoryNotFoundException("Some categories not found: " + categoryIds);
         }
         return new HashSet<>(categories);
+    }
+
+    @Override
+    @Transactional
+    public List<PlacePopularResponse> findAllOrderedByPunctuation() {
+        return placeRepository.findAllOrderedByPunctuation()
+                .stream()
+                .map(PlaceMapper::toPopularResponse)
+                .toList();
     }
 
     // Métodos no implementados (opcional)
@@ -76,9 +87,5 @@ public class PlaceServiceImpl implements PlaceService {
         return Optional.empty();
     }
 
-    @Override
-    public void searchAndAddCategoryToPlace(NewPlaceRequest newPlaceRequest, PlaceModel placeModel) {
-
-    }
 }
 

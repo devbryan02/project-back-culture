@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -35,23 +36,32 @@ public class CloudinaryComponent {
     }
 
     public void uploadImage(MultipartFile file, ImageModel imageModel) throws IOException {
-
-        //Obetener el nombre original del archivo
+        // Obtener el nombre original del archivo
         String fileName = file.getOriginalFilename();
 
-        Map<String, Object> uploadParams = new HashMap<>();
-        uploadParams.put("folder", UPLOAD_DIRECTORY);
-        uploadParams.put("public_id",UPLOAD_DIRECTORY+"/"+fileName);
+        // Asegurarse de que el nombre no tenga la extensión duplicada
+        if (fileName != null) {
+            // Eliminar la extensión del nombre del archivo (si la tiene)
+            String baseFileName = fileName.substring(0, fileName.lastIndexOf('.'));
 
-        Map<?,?> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadParams);
-        log.info("Upload result {}", uploadResult);
+            // Generar un nombre único para evitar conflictos con otros archivos con el mismo nombre
+            String uniqueFileName = UUID.randomUUID() + "_" + baseFileName;
 
-        //Obtener el public_id y el url_secure
-        String publicId = uploadResult.get("public_id").toString();
-        String secureUrl = uploadResult.get("secure_url").toString();
+            Map<String, Object> uploadParams = new HashMap<>();
+            uploadParams.put("folder", UPLOAD_DIRECTORY);
+            uploadParams.put("public_id", UPLOAD_DIRECTORY + "/" + uniqueFileName);
 
-        imageModel.setPublicId(publicId);
-        imageModel.setSecureUrl(secureUrl);
+            // Subir el archivo a Cloudinary
+            Map<?,?> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadParams);
+            log.info("Upload result {}", uploadResult);
+
+            // Obtener el public_id y el secure_url
+            String publicId = uploadResult.get("public_id").toString();
+            String secureUrl = uploadResult.get("secure_url").toString();
+
+            imageModel.setPublicId(publicId);
+            imageModel.setSecureUrl(secureUrl);
+        }
     }
 
     public void deleteImage(String publicId) throws IOException {

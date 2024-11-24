@@ -65,7 +65,7 @@ public class PlaceModel {
             mappedBy = "place"
     )
     @Builder.Default
-    private List<ImageModel> photos = new ArrayList<>();
+    private List<ImageModel> images = new ArrayList<>();
 
     //Relacion de uno a muchos con calificacion
     @OneToMany(
@@ -78,11 +78,15 @@ public class PlaceModel {
     List<QualificationModel> qualifications = new ArrayList<>();
 
     //Calculando la calificacion
-    public Double getPunctuationAverage() {
-        return qualifications.stream()
+    public double getPunctuationAverage() {
+
+        if(qualifications.isEmpty()) return 0;
+
+        double average = qualifications.stream()
                 .mapToInt(QualificationModel::getPunctuation)
                 .average()
-                .orElse(0.0);
+                .orElse(0);
+        return Double.parseDouble(String.format("%.1f", average));
     }
 
 }
