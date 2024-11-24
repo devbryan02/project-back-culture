@@ -9,6 +9,7 @@ import com.project.projectbackculture.persistence.repository.PlaceRepository;
 import com.project.projectbackculture.service.interfaces.PlaceService;
 import com.project.projectbackculture.web.request.NewPlaceRequest;
 import com.project.projectbackculture.web.response.PlaceResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,41 +21,49 @@ import java.util.Set;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
 
     private final PlaceRepository placeRepository;
     private final CategoryRepository categoryRepository;
 
-    public PlaceServiceImpl(PlaceRepository placeRepository, CategoryRepository categoryRepository) {
-        this.placeRepository = placeRepository;
-        this.categoryRepository = categoryRepository;
-    }
-
     @Override
     @Transactional
     public PlaceResponse save(NewPlaceRequest request) {
-
         log.info("Saving new place: {}", request);
 
+        // Mapea el DTO a una entidad
         PlaceModel placeModel = PlaceMapper.toModel(request);
 
-        //Busca y agrega cada categoria si existe al place
-        searchAndAddCategoryToPlace(request, placeModel);
+        // Busca y asigna categorías
+        Set<CategoryModel> categories = fetchCategoriesByIds(request.categoryIds());
+        placeModel.setCategories(categories);
 
-        // Guarda el place en la base de datos
+        // Guarda el lugar y mapea la respuesta
         PlaceModel savedPlace = placeRepository.save(placeModel);
-
         return PlaceMapper.toResponse(savedPlace);
     }
 
+    private Set<CategoryModel> fetchCategoriesByIds(Set<Integer> categoryIds) {
+        if (categoryIds == null || categoryIds.isEmpty()) {
+            return new HashSet<>();
+        }
+        List<CategoryModel> categories = categoryRepository.findAllById(categoryIds);
+        if (categories.size() != categoryIds.size()) {
+            throw new CategoryNotFoundException("Some categories not found: " + categoryIds);
+        }
+        return new HashSet<>(categories);
+    }
+
+    // Métodos no implementados (opcional)
     @Override
-    public PlaceResponse update(NewPlaceRequest request, Integer integer) {
-        return null;
+    public PlaceResponse update(NewPlaceRequest request, Integer id) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
-    public void delete(Integer integer) {
-
+    public void delete(Integer id) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
@@ -63,27 +72,13 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public Optional<PlaceResponse> findById(Integer integer) {
+    public Optional<PlaceResponse> findById(Integer id) {
         return Optional.empty();
     }
 
     @Override
-    @Transactional
-    public void searchAndAddCategoryToPlace(NewPlaceRequest request, PlaceModel placeModel) {
-        //Creamos un nuevo set para las categorias
-        Set<CategoryModel> categories = new HashSet<>();
+    public void searchAndAddCategoryToPlace(NewPlaceRequest newPlaceRequest, PlaceModel placeModel) {
 
-        //Buscar y agregar cada categoria si existe
-        if(request.categoryIds() != null && !request.categoryIds().isEmpty()){
-            for(Integer categoryId : request.categoryIds()) {
-                CategoryModel  categoryModel = categoryRepository.findById(categoryId)
-                        .orElseThrow(() -> new CategoryNotFoundException(categoryId));
-                categories.add(categoryModel);
-                log.info("Loanding category: {}", categoryModel);
-            }
-        }
-
-        //Asigna las categorias a place
-        placeModel.setCategories(categories);
     }
 }
+

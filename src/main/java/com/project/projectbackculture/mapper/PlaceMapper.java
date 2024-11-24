@@ -17,7 +17,6 @@ public class PlaceMapper {
                 .description(placeModel.getDescription())
                 .location(placeModel.getLocation())
                 .distance(placeModel.getDistance())
-                .punctuationAverage(placeModel.getPunctuationAverage())
                 .build();
     }
 
