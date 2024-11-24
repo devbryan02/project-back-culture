@@ -21,9 +21,9 @@ public class FavoriteController {
 
     @PostMapping
     public ResponseEntity<FavoriteResponse> createFavorite(
-            @RequestParam Integer userId,
+            @RequestParam String usernaname,
             @RequestParam Integer placeId){
-        FavoriteResponse favoriteResponse = favoriteService.addFavorite(userId, placeId);
+        FavoriteResponse favoriteResponse = favoriteService.addFavorite(usernaname, placeId);
         return new ResponseEntity<>(favoriteResponse, HttpStatus.CREATED);
     }
 

@@ -9,10 +9,10 @@ import com.project.projectbackculture.web.response.FavoriteResponse;
 public interface FavoriteService extends ServiceGeneral<FavoriteResponse,NewFavoriteRequest,Integer> {
 
     // no hay mas metodos para  favorite model
-    FavoriteResponse addFavorite(Integer userId, Integer placeId);
+    FavoriteResponse addFavorite(String username, Integer placeId);
     void checkExistingFavorite(Integer userId, Integer placeId);
-    UserModel findByUserId(Integer userId);
+    UserModel findByUsername(String username);
     PlaceModel findByPlaceId(Integer placeId);
-    void validateIDRequest(Integer userId, Integer placeId);
+    void validateIDRequest(String username, Integer placeId);
 
 }

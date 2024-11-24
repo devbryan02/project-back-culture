@@ -37,15 +37,15 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     @Transactional
-    public FavoriteResponse addFavorite(Integer userId, Integer placeId) {
+    public FavoriteResponse addFavorite(String username, Integer placeId) {
 
         //Valida los params
-        validateIDRequest(userId, placeId);
+        validateIDRequest(username, placeId);
 
         try{
 
             //Buscar al user y lugar por sus IDs
-            UserModel userModel = findByUserId(userId);
+            UserModel userModel = findByUsername(username);
             PlaceModel placeModel = findByPlaceId(placeId);
 
             //Valida si un user ya tiene guardado el favorito un lugar
@@ -76,8 +76,8 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public UserModel findByUserId(Integer userId) {
-        return userRepository.findById(userId)
+    public UserModel findByUsername(String username) {
+        return userRepository.findByUsername(username)
                 .orElseThrow(() -> new CustomException("User not found"));
     }
 
@@ -88,8 +88,8 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public void validateIDRequest(Integer userId, Integer placeId) {
-        if(userId == null) throw new CustomException("UserId is required");
+    public void validateIDRequest(String username, Integer placeId) {
+        if(username == null) throw new CustomException("UserId is required");
         if(placeId == null) throw new CustomException("PlaceId is required");
     }
 
