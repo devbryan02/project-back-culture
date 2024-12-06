@@ -1,13 +1,16 @@
 package com.project.projectbackculture.service.implement;
 
 import com.project.projectbackculture.exception.CategoryNotFoundException;
+import com.project.projectbackculture.exception.CustomException;
 import com.project.projectbackculture.mapper.PlaceMapper;
 import com.project.projectbackculture.persistence.model.CategoryModel;
 import com.project.projectbackculture.persistence.model.PlaceModel;
 import com.project.projectbackculture.persistence.repository.CategoryRepository;
 import com.project.projectbackculture.persistence.repository.PlaceRepository;
+import com.project.projectbackculture.persistence.repository.UserRepository;
 import com.project.projectbackculture.service.interfaces.PlaceService;
 import com.project.projectbackculture.web.request.NewPlaceRequest;
+import com.project.projectbackculture.web.response.PlaceDetailsResponse;
 import com.project.projectbackculture.web.response.PlacePopularResponse;
 import com.project.projectbackculture.web.response.PlaceResponse;
 import lombok.RequiredArgsConstructor;
@@ -64,6 +67,17 @@ public class PlaceServiceImpl implements PlaceService {
                 .stream()
                 .map(PlaceMapper::toPopularResponse)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public PlaceDetailsResponse getPlaceDetailsById(Integer placeId) {
+
+        PlaceModel placeDetailsById = placeRepository.findById(placeId)
+                .orElseThrow(() -> new CustomException("Place not fount"));
+
+        return PlaceMapper.toDetailsResponse(placeDetailsById);
+
     }
 
     // Métodos no implementados (opcional)

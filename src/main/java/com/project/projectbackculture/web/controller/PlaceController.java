@@ -2,6 +2,7 @@ package com.project.projectbackculture.web.controller;
 
 import com.project.projectbackculture.service.implement.PlaceServiceImpl;
 import com.project.projectbackculture.web.request.NewPlaceRequest;
+import com.project.projectbackculture.web.response.PlaceDetailsResponse;
 import com.project.projectbackculture.web.response.PlacePopularResponse;
 import com.project.projectbackculture.web.response.PlaceResponse;
 import jakarta.validation.Valid;
@@ -32,5 +33,11 @@ public class PlaceController {
     public ResponseEntity<List<PlacePopularResponse>> findPopularPlaces() {
         List<PlacePopularResponse> placeResponseList = placeService.findAllOrderedByPunctuation();
         return new ResponseEntity<>(placeResponseList, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<PlaceDetailsResponse> getPlaceDetailsById(@PathVariable Integer id){
+        PlaceDetailsResponse placeDetailsResponse = placeService.getPlaceDetailsById(id);
+        return new ResponseEntity<>(placeDetailsResponse, HttpStatus.OK);
     }
 }

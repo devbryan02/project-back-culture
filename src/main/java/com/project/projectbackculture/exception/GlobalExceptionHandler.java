@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
 
         ApiError apiError = new ApiError(
                 request.getDescription(false),
-                "Error de validacion",
+                "Argumento invalido",
                 HttpStatus.BAD_REQUEST.value(),
                 LocalDateTime.now(),
                 errors
@@ -122,7 +122,7 @@ public class GlobalExceptionHandler {
         } else if (ex instanceof CredentialsExpiredException) {
             message = "Credenciales expiradas";
         } else if (ex instanceof UsernameNotFoundException) {
-            message = "El usuario no está registrado";
+            message = "Usuario no encontrado";
         }
 
         log.info("Auhthentication error: {} - {} ",message, ex.getMessage());

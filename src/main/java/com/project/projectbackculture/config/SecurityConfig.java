@@ -23,7 +23,6 @@ public class SecurityConfig {
 
     private JwtUtils jwtUtils;
 
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http

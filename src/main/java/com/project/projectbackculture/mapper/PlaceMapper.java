@@ -3,6 +3,7 @@ package com.project.projectbackculture.mapper;
 import com.project.projectbackculture.persistence.model.ImageModel;
 import com.project.projectbackculture.persistence.model.PlaceModel;
 import com.project.projectbackculture.web.request.NewPlaceRequest;
+import com.project.projectbackculture.web.response.PlaceDetailsResponse;
 import com.project.projectbackculture.web.response.PlacePopularResponse;
 import com.project.projectbackculture.web.response.PlaceResponse;
 
@@ -43,6 +44,25 @@ public class PlaceMapper {
                 .urlImage(imageUrl)
                 .punctuationAverage(placeModel.getPunctuationAverage())
                 .build();
+    }
+
+    public static PlaceDetailsResponse toDetailsResponse(PlaceModel placeModel) {
+
+        if(placeModel == null) return null;
+
+        List<String> images = placeModel.getImages().stream()
+                .map(ImageModel::getSecureUrl)
+                .toList();
+
+        return PlaceDetailsResponse.builder()
+                .placeId(placeModel.getPlaceId())
+                .name(placeModel.getName())
+                .location(placeModel.getLocation())
+                .descripcion(placeModel.getDescription())
+                .qualificationAverage(placeModel.getPunctuationAverage())
+                .images(images)
+                .build();
+
     }
 
     //Mapear request a model

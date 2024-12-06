@@ -84,9 +84,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void delete(Integer integer) {
-
-    }
+    public void delete(Integer integer) {}
 
     @Override
     public List<UserResponse> findAll() {
@@ -170,7 +168,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         String accessToken = jwtUtils.createToken(authentication);
 
-        return new AuthLoginResponse(username, "User logged in successfully",
+        return new AuthLoginResponse(username, "Inicio de session exitoso",
                 accessToken, true);
     }
 

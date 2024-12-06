@@ -35,5 +35,4 @@ public class AuthController {
         AuthLoginResponse authLoginResponse = userService.loginUser(authLoginRequest);
         return new ResponseEntity<>(authLoginResponse, HttpStatus.OK);
     }
-
 }

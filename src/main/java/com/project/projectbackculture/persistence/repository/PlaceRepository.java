@@ -11,9 +11,11 @@ import java.util.List;
 public interface PlaceRepository extends JpaRepository<PlaceModel, Integer> {
 
 
-    @Query("select p from PlaceModel p " +
-            "left join p.qualifications q " +
-            "group by p " +
-            "order by avg (q.punctuation) desc")
+    // Consultar datos de los lugares mas populares de forma desc
+    @Query("SELECT p FROM PlaceModel p " +
+            "LEFT JOIN p.qualifications q " +
+            "GROUP BY p " +
+            "ORDER BY AVG(q.punctuation) desc")
     List<PlaceModel> findAllOrderedByPunctuation();
+
 }
