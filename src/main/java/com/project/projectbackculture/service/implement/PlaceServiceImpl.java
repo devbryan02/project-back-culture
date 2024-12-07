@@ -7,7 +7,6 @@ import com.project.projectbackculture.persistence.model.CategoryModel;
 import com.project.projectbackculture.persistence.model.PlaceModel;
 import com.project.projectbackculture.persistence.repository.CategoryRepository;
 import com.project.projectbackculture.persistence.repository.PlaceRepository;
-import com.project.projectbackculture.persistence.repository.UserRepository;
 import com.project.projectbackculture.service.interfaces.PlaceService;
 import com.project.projectbackculture.web.request.NewPlaceRequest;
 import com.project.projectbackculture.web.response.PlaceDetailsResponse;
@@ -22,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 
 @Service
 @Slf4j
@@ -80,7 +80,16 @@ public class PlaceServiceImpl implements PlaceService {
 
     }
 
-    // Métodos no implementados (opcional)
+    @Override
+    public List<PlaceResponse> searchByKeyword(String keyword) {
+        List<PlaceModel> placeModelList = placeRepository.searchByKerword(keyword);
+        log.info("place buscado {}", placeModelList);
+        return placeModelList.stream()
+                .map(PlaceMapper::toResponse)
+                .toList();
+    }
+
+
     @Override
     public PlaceResponse update(NewPlaceRequest request, Integer id) {
         throw new UnsupportedOperationException("Not yet implemented");

@@ -15,5 +15,6 @@ public interface PlaceService extends ServiceGeneral<PlaceResponse,NewPlaceReque
     Set<CategoryModel> fetchCategoriesByIds(Set<Integer> categoryIds);
     List<PlacePopularResponse> findAllOrderedByPunctuation();
     PlaceDetailsResponse getPlaceDetailsById(Integer placeId);
+    List<PlaceResponse> searchByKeyword(String keyword);
 
 }

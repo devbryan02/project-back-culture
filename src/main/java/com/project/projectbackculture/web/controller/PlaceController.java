@@ -40,4 +40,10 @@ public class PlaceController {
         PlaceDetailsResponse placeDetailsResponse = placeService.getPlaceDetailsById(id);
         return new ResponseEntity<>(placeDetailsResponse, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/search")
+    public ResponseEntity<List<PlaceResponse>> searchPlace(@RequestParam String keyword){
+        List<PlaceResponse> placeResponseList = placeService.searchByKeyword(keyword);
+        return new ResponseEntity<>(placeResponseList, HttpStatus.OK);
+    }
 }
