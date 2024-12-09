@@ -43,12 +43,12 @@ public class SecurityConfig {
                     request.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     request.requestMatchers("/place/**").permitAll();
 
-                    //Enoints privados
+                    //Endpoints privados
                     request.requestMatchers("/category/**").hasRole("ADMIN");
-                    request.requestMatchers("/comment/**").hasRole("ADMIN");
+                    request.requestMatchers("/comment/**").hasRole("USER");
                     request.requestMatchers("/favorite").hasRole("USER");
                     request.requestMatchers("/image/**").hasRole("ADMIN");
-                    request.requestMatchers("/qualification/**").hasRole("ADMIN");
+                    request.requestMatchers("/qualification/**").hasRole("USER");
 
                     //Endpoints no configurados
                     request.anyRequest().denyAll();

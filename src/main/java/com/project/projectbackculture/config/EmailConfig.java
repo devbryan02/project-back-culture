@@ -17,7 +17,6 @@ public class EmailConfig {
     @Value("${google.password}")
     private  String EMAIL_PASSWORD;
 
-
     @Bean
     public JavaMailSender javaMailSender(){
 

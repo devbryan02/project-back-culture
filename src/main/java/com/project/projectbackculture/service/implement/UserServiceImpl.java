@@ -4,6 +4,7 @@ import com.project.projectbackculture.exception.CustomException;
 import com.project.projectbackculture.exception.DuplicateEmailException;
 import com.project.projectbackculture.exception.DuplicateUsernameException;
 import com.project.projectbackculture.web.request.AuthLoginRequest;
+import com.project.projectbackculture.web.request.EmailRequest;
 import com.project.projectbackculture.web.request.NewUserRequest;
 import com.project.projectbackculture.web.response.AuthLoginResponse;
 import com.project.projectbackculture.web.response.UserResponse;
@@ -15,6 +16,7 @@ import com.project.projectbackculture.persistence.model.UserModel;
 import com.project.projectbackculture.persistence.repository.UserRepository;
 import com.project.projectbackculture.service.interfaces.UserService;
 import com.project.projectbackculture.utility.JwtUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,18 +39,13 @@ import java.util.Set;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
     private final PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(UserRepository userRepository, JwtUtils jwtUtils,
-                           PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.jwtUtils = jwtUtils;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final EmailServiceImpl emailService;
 
     @Override
     @Transactional
@@ -65,6 +62,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             //Asigna valores por defecto al usuario
             setUserWithDefaultValues(userModel);
             log.debug("Enriched user with default values");
+
+            //Envia un mensjae a bienvendida al usuario nuevo
+            EmailRequest reques = buildEmail(userModel);
+            emailService.sendEmail(reques);
 
             // Guardar y transformar la respuesta
             UserModel savedUser = userRepository.save(userModel);
@@ -213,5 +214,50 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     }
+
+    @Override
+    public EmailRequest buildEmail(UserModel userModel) {
+
+        final String subject = userModel.getUsername()
+                .concat(" ¡Bienvenido/a a Inti Ruta! \uD83C\uDF1F");
+
+        final String message = String.format(
+                """
+                        Hola %s,
+                        
+                        ¡Bienvenido/a a **Inti Ruta**! 🎉
+                        
+                        Estamos encantados de tenerte con nosotros en esta experiencia única para explorar la riqueza cultural y la belleza natural de Ayacucho, Perú. Con nuestra aplicación, puedes:
+                        
+                        🌄 Descubrir paisajes impresionantes.
+                        🎨 Explorar la riqueza del arte y la cultura ayacuchana.
+                        🏛️ Visitar lugares turísticos llenos de historia.
+                        
+                        Tu aventura comienza aquí. Prepárate para sumergirte en las tradiciones y maravillas de Ayacucho.
+                        
+                        Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos. Estamos aquí para asegurarnos de que tu experiencia sea inolvidable.
+                        
+                        ¡Bienvenido/a a nuestra comunidad cultural!
+                        
+                        Atentamente,
+                        El equipo de Inti Ruta
+                        
+                        Arte ASCII:
+                        
+                             _/\\_      \s
+                            /    \\   🌞 \s
+                           /______\\      \s
+                            |  |      \s
+                        """,
+                userModel.getUsername()
+        );
+
+        return EmailRequest.builder()
+                .toUser(userModel.getEmail())
+                .subject(subject)
+                .message(message)
+                .build();
+    }
+
 
 }
