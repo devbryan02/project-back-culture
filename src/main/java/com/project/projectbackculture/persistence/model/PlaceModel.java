@@ -23,7 +23,7 @@ public class PlaceModel {
     private String description;
     private String location;
     private String distance;
-    private boolean isVisible = true; // Valor por defecto en true
+    private boolean isVisible; // Valor por defecto en true
 
 
     //Relaacion de muchos a muchos entre place y category
