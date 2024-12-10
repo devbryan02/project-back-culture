@@ -81,11 +81,9 @@ public class PlaceModel {
 
         if(qualifications.isEmpty()) return 0;
 
-        double average = qualifications.stream()
+        return qualifications.stream()
                 .mapToInt(QualificationModel::getPunctuation)
                 .average()
                 .orElse(0);
-        return Double.parseDouble(String.format("%.1f", average));
     }
-
 }

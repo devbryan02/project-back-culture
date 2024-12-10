@@ -15,5 +15,4 @@ public class JacksonConfig {
         mapper.setLocale(Locale.US);
         return mapper;
     }
-
 }

@@ -37,12 +37,16 @@ public class PlaceMapper {
                 .map(ImageModel::getSecureUrl)
                 .orElse("Not found image");
 
+        // redondear la puntuacion
+        double average = placeModel.getPunctuationAverage();
+        double roundedAverage = Math.round(average * 10) / 10.0;
+
         return PlacePopularResponse.builder()
                 .placeId(placeModel.getPlaceId())
                 .name(placeModel.getName())
                 .location(placeModel.getLocation())
                 .urlImage(imageUrl)
-                .punctuationAverage(placeModel.getPunctuationAverage())
+                .punctuationAverage(roundedAverage)
                 .build();
     }
 
