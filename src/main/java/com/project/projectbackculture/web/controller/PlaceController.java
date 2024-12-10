@@ -46,4 +46,10 @@ public class PlaceController {
         List<PlaceResponse> placeResponseList = placeService.searchByKeyword(keyword);
         return new ResponseEntity<>(placeResponseList, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/{category}")
+    public ResponseEntity<List<PlaceResponse>> findPlaceByCategory(@PathVariable String category){
+        List<PlaceResponse> placeResponseList = placeService.findPlaceByCategory(category);
+        return new ResponseEntity<>(placeResponseList, HttpStatus.OK);
+    }
 }

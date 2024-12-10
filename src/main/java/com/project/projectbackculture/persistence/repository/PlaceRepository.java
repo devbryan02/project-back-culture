@@ -19,9 +19,21 @@ public interface PlaceRepository extends JpaRepository<PlaceModel, Integer> {
             "ORDER BY AVG(q.punctuation) desc")
     List<PlaceModel> findAllOrderedByPunctuation();
 
+    //BUscar lugares por palabra
     @Query("SELECT p FROM PlaceModel p " +
             "WHERE LOWER(p.name) LIKE LOWER(CONCAT(:palabra, '%')) " +
             "OR LOWER(p.description) LIKE LOWER(CONCAT(:palabra, '%')) " +
             "OR LOWER(p.location) LIKE LOWER(CONCAT(:palabra, '%'))" )
     List<PlaceModel> searchByKerword(@Param("palabra") String palabra);
+
+    // Listar lugares por categoria
+    @Query("SELECT p FROM PlaceModel p " +
+            "INNER JOIN p.categories c " +
+            "WHERE c.categoryName = :category " +
+            "GROUP BY p " +
+            "ORDER BY  p.placeId")
+    List<PlaceModel> findPlaceByCategory(String category);
 }
+
+
+

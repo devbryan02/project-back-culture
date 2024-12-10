@@ -1,29 +1,29 @@
-# API RESTful Cultura Ayacuchana
+# API RESTful Cultura Ayacuchana 🏺🌄
 
 API que permite acceder y gestionar información sobre el patrimonio cultural, histórico y artístico de Ayacucho, Perú. Diseñada para facilitar el desarrollo de aplicaciones que promuevan y preserven las tradiciones, festividades y manifestaciones culturales ayacuchanas.
 
-## Propósito
+## Propósito 🎯
 - Proporcionar acceso estructurado a datos culturales de Ayacucho
 - Facilitar la integración de contenido cultural en aplicaciones
 - Servir como recurso para desarrolladores e investigadores
 
-# Documentación de API
+## Convenciones de la API 🔧
 
-## Tabla de Contenidos
-- [AuthController](#authcontroller)
-    - [Register](#register)
-    - [Login](#login)
-- [CategoryController](#categorycontroller)
-- [ImageController](#imagecontroller)
-- [PlaceController](#placecontroller)
+- Todas las rutas comienzan con el prefijo `/api/v1`
+- Las respuestas son en formato JSON
+- Los IDs son parámetros de ruta usando la notación `/{id}`
+- Los métodos HTTP siguen las convenciones REST:
+  - POST: Crear recursos
+  - GET: Obtener recursos
+  - PATCH: Actualizar recursos parcialmente
+  - DELETE: Eliminar recursos
 
-## AuthController
+## Controladores de API
 
-Base URL: `/api/v1/auth`
+### 1. AuthController
+**Base URL:** `/api/v1/auth`
 
-### Endpoints
-
-#### Register
+#### Registro de Usuario
 **Endpoint:** `POST /register`
 
 **Descripción:** Registra un nuevo usuario en el sistema.
@@ -38,7 +38,7 @@ Base URL: `/api/v1/auth`
 }
 ```
 
-#### Login
+#### Inicio de Sesión
 **Endpoint:** `POST /login`
 
 **Descripción:** Autentica a un usuario existente.
@@ -51,7 +51,7 @@ Base URL: `/api/v1/auth`
 }
 ```
 
-**Response:**
+**Response Exitoso:**
 ```json
 {
   "username": "usuarioEjemplo",
@@ -61,52 +61,125 @@ Base URL: `/api/v1/auth`
 }
 ```
 
-## CategoryController
+### 2. PlaceController
+**Base URL:** `/api/v1/place`
 
-Base URL: `/api/v1/category`
+#### Obtener Lugares Populares
+**Endpoint:** `GET /popular`
 
-### Endpoints
+**Descripción:** Recupera los lugares más populares, ordenados por puntuación.
 
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| POST | `/` | Crea una nueva categoría |
-| PATCH | `/{id}` | Actualiza una categoría existente |
-| GET | `/{id}` | Obtiene los detalles de una categoría específica |
-| GET | `/all` | Obtiene la lista de todas las categorías disponibles |
-| DELETE | `/{id}` | Elimina una categoría específica |
+**Respuesta Exitosa:**
+```json
+[
+  {
+    "placeId": 1,
+    "name": "Nombre del lugar",
+    "location": "Ubicación del lugar", 
+    "urlImage": "https://example.com/image.jpg",
+    "punctuationAverage": 4.5
+  }
+]
+```
 
-## ImageController
+#### Detalles de un Lugar
+**Endpoint:** `GET /{id}`
 
-Base URL: `/api/v1/image`
+**Descripción:** Obtiene los detalles completos de un lugar específico.
 
-### Endpoints
+**Respuesta Exitosa:**
+```json
+{
+  "placeId": 1,
+  "name": "Nombre del lugar",
+  "location": "Ubicación del lugar",
+  "descripcion": "Descripción detallada del lugar",
+  "qualificationAverage": 4.5,
+  "images": [
+    "https://example.com/image1.jpg",
+    "https://example.com/image2.jpg"
+  ]
+}
+```
 
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| POST | `/` | Carga una nueva foto asociada a un lugar |
+#### Búsqueda de Lugares
+**Endpoint:** `GET /search`
 
-**Notas:**
-- Content-Type requerido: `multipart/form-data`
-- Acepta datos del lugar y el archivo de imagen
+**Descripción:** Busca lugares por palabra clave.
 
-## PlaceController
+**Parámetros:**
+- `keyword`: Palabra clave de búsqueda
 
-Base URL: `/api/v1/place`
+**Respuesta Exitosa:**
+```json
+[
+  {
+    "placeId": 1,
+    "name": "Nombre del lugar",
+    "location": "Ubicación del lugar", 
+    "urlImage": "https://example.com/image.jpg",
+    "punctuationAverage": 4.5
+  }
+]
+```
 
-### Endpoints
+#### Lugares por Categoría
+**Endpoint:** `GET /{category}`
 
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| POST | `/` | Crea un nuevo lugar |
+**Descripción:** Recupera lugares filtrados por categoría.
 
-## Convenciones de la API
+**Respuesta Exitosa:**
+```json
+[
+  {
+    "placeId": 1,
+    "name": "Nombre del lugar",
+    "location": "Ubicación del lugar", 
+    "urlImage": "https://example.com/image.jpg",
+    "punctuationAverage": 4.5,
+    "category": "Categoría del lugar"
+  }
+]
+```
 
-- Todas las rutas comienzan con el prefijo `/api/v1`
-- Las respuestas son en formato JSON
-- Los IDs son parámetros de ruta usando la notación `/{id}`
-- Los métodos HTTP siguen las convenciones REST:
-    - POST: Crear recursos
-    - GET: Obtener recursos
-    - PATCH: Actualizar recursos parcialmente
-    - DELETE: Eliminar recursos
+## Consideraciones Importantes 🛡️
 
+### Autenticación
+- Hasta este momento de desarrollo ningun endpoint requiere autenticacion(mas adelante si)
+- Usar token JWT proporcionado en el login
+- Incluir token en header `Authorization: Bearer {token}`
+
+### Manejo de Errores
+- Códigos de estado HTTP estándar
+- Mensajes de error descriptivos
+- Validación de entrada de datos
+
+### Buenas Prácticas
+- Implementar caché para consultas frecuentes
+- Usar paginación para grandes conjuntos de datos
+- Mantener consistencia en formatos de respuesta
+
+## Ejemplos de Uso 🚀
+
+### Obtener Lugares Populares
+```bash
+GET /api/v1/place/popular
+```
+
+### Buscar Lugar por ID
+```bash
+GET /api/v1/place/1
+```
+
+### Buscar Lugares
+```bash
+GET /api/v1/place/search?keyword=ayacucho
+```
+
+## Errores Comunes 🚨
+- **400 Bad Request:** Parámetros inválidos
+- **401 Unauthorized:** Credenciales incorrectas
+- **404 Not Found:** Recurso no encontrado
+- **500 Internal Server Error:** Errores del servidor
+
+*Última actualización: Diciembre 2024*

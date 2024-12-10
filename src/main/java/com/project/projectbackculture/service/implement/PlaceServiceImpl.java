@@ -82,13 +82,31 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public List<PlaceResponse> searchByKeyword(String keyword) {
+
+        if(keyword == null || keyword.isEmpty())
+            throw new CustomException("Keyword cannot be null or empty");
+
         List<PlaceModel> placeModelList = placeRepository.searchByKerword(keyword);
         log.info("place buscado {}", placeModelList);
+
         return placeModelList.stream()
                 .map(PlaceMapper::toResponse)
                 .toList();
     }
 
+    @Override
+    public List<PlaceResponse> findPlaceByCategory(String category) {
+
+        if(category == null || category.isEmpty())
+            throw new CustomException("category param is required");
+
+        List<PlaceModel> placeListByCategory = placeRepository.findPlaceByCategory(category);
+        log.info("place con la categoria {} {}",category, placeListByCategory);
+
+        return placeListByCategory.stream()
+                .map(PlaceMapper::toResponse)
+                .toList();
+    }
 
     @Override
     public PlaceResponse update(NewPlaceRequest request, Integer id) {
