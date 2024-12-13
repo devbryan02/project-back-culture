@@ -47,7 +47,7 @@ public class PlaceController {
         return new ResponseEntity<>(placeResponseList, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/{category}")
+    @GetMapping(path = "/filter/{category}")
     public ResponseEntity<List<PlaceResponse>> findPlaceByCategory(@PathVariable String category){
         List<PlaceResponse> placeResponseList = placeService.findPlaceByCategory(category);
         return new ResponseEntity<>(placeResponseList, HttpStatus.OK);

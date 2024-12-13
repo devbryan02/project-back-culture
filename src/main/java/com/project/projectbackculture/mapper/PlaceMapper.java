@@ -17,12 +17,19 @@ public class PlaceMapper {
 
         if (placeModel == null) return null;
 
+        String imageUrl = Optional.ofNullable(placeModel.getImages())
+                .filter( images -> !images.isEmpty())
+                .map(List::getFirst)
+                .map(ImageModel::getSecureUrl)
+                .orElse("Not found image");
+
         return PlaceResponse.builder()
                 .placeId(placeModel.getPlaceId())
                 .name(placeModel.getName())
                 .description(placeModel.getDescription())
                 .location(placeModel.getLocation())
                 .distance(placeModel.getDistance())
+                .urlImage(imageUrl)
                 .build();
     }
 

@@ -81,6 +81,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
+    @Transactional
     public List<PlaceResponse> searchByKeyword(String keyword) {
 
         if(keyword == null || keyword.isEmpty())
@@ -95,6 +96,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
+    @Transactional
     public List<PlaceResponse> findPlaceByCategory(String category) {
 
         if(category == null || category.isEmpty())

@@ -124,7 +124,7 @@ API que permite acceder y gestionar información sobre el patrimonio cultural, h
 ```
 
 #### Lugares por Categoría
-**Endpoint:** `GET /{category}`
+**Endpoint:** `GET filter/{category}`
 
 **Descripción:** Recupera lugares filtrados por categoría.
 
