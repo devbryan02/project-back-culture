@@ -4,6 +4,9 @@ import com.project.projectbackculture.persistence.model.PlaceModel;
 import com.project.projectbackculture.persistence.model.UserModel;
 import com.project.projectbackculture.web.request.NewFavoriteRequest;
 import com.project.projectbackculture.web.response.FavoriteResponse;
+import com.project.projectbackculture.web.response.UserFavorityResponse;
+
+import java.util.List;
 
 
 public interface FavoriteService extends ServiceGeneral<FavoriteResponse,NewFavoriteRequest,Integer> {
@@ -14,5 +17,6 @@ public interface FavoriteService extends ServiceGeneral<FavoriteResponse,NewFavo
     UserModel findByUsername(String username);
     PlaceModel findByPlaceId(Integer placeId);
     void validateIDRequest(String username, Integer placeId);
+    List<UserFavorityResponse> findFavouritesByUsername(String username);
 
 }

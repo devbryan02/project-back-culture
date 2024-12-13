@@ -11,6 +11,7 @@ import com.project.projectbackculture.persistence.repository.UserRepository;
 import com.project.projectbackculture.service.interfaces.FavoriteService;
 import com.project.projectbackculture.web.request.NewFavoriteRequest;
 import com.project.projectbackculture.web.response.FavoriteResponse;
+import com.project.projectbackculture.web.response.UserFavorityResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,6 +92,18 @@ public class FavoriteServiceImpl implements FavoriteService {
     public void validateIDRequest(String username, Integer placeId) {
         if(username == null) throw new CustomException("UserId is required");
         if(placeId == null) throw new CustomException("PlaceId is required");
+    }
+
+    @Override
+    @Transactional
+    public List<UserFavorityResponse> findFavouritesByUsername(String username) {
+
+        if(username == null) throw new CustomException("username is required");
+
+        List<PlaceModel> placeModelList = favoriteRepository.findPlacesByUsername(username);
+        return placeModelList.stream()
+                .map(FavoriteMapper::favorityPlaceByUserResponse)
+                .toList();
     }
 
     @Override

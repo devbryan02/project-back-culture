@@ -1,6 +1,7 @@
 package com.project.projectbackculture.web.response;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ public record FavoriteResponse(
         Integer favoriteId,
         Integer userId,
         Integer placeId,
+        @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate savedDate
 ) {
 }

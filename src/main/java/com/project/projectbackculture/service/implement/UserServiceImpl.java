@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final EmailServiceImpl emailService;
 
+
     @Override
     @Transactional
     public UserResponse save(NewUserRequest request) {

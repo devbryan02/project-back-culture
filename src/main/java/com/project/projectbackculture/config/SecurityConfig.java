@@ -3,6 +3,7 @@ package com.project.projectbackculture.config;
 import com.project.projectbackculture.utility.JwtUtils;
 import com.project.projectbackculture.utility.JwtValidator;
 import com.project.projectbackculture.service.implement.UserServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,16 +24,23 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class SecurityConfig {
 
     private final JwtUtils jwtUtils;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
-    public SecurityConfig(JwtUtils jwtUtils) {
+    public SecurityConfig(JwtUtils jwtUtils, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
         this.jwtUtils = jwtUtils;
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
     }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+
                 .httpBasic(Customizer.withDefaults())
+
+                .exceptionHandling( except ->
+                        except.authenticationEntryPoint(customAuthenticationEntryPoint))
+
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
                     session.maximumSessions(1);
@@ -46,7 +54,7 @@ public class SecurityConfig {
                     //Endpoints privados
                     request.requestMatchers("/category/**").hasRole("ADMIN");
                     request.requestMatchers("/comment/**").hasRole("USER");
-                    request.requestMatchers("/favorite").hasRole("USER");
+                    request.requestMatchers("/favority/**").hasRole("USER");
                     request.requestMatchers("/image/**").hasRole("ADMIN");
                     request.requestMatchers("/qualification/**").hasRole("USER");
 
