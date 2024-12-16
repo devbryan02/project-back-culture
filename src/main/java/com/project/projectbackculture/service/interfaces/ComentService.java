@@ -3,7 +3,10 @@ package com.project.projectbackculture.service.interfaces;
 import com.project.projectbackculture.persistence.model.PlaceModel;
 import com.project.projectbackculture.persistence.model.UserModel;
 import com.project.projectbackculture.web.request.NewCommentRequest;
+import com.project.projectbackculture.web.response.CommentByPlaceResponse;
 import com.project.projectbackculture.web.response.CommentResponse;
+
+import java.util.List;
 
 public interface ComentService extends ServiceGeneral<CommentResponse,NewCommentRequest,Integer> {
 
@@ -13,4 +16,5 @@ public interface ComentService extends ServiceGeneral<CommentResponse,NewComment
     PlaceModel findPlaceById(Integer placeId);
     UserModel findUserById(Integer userId);
     void checkExistingComment(Integer userId, Integer placeId);
+    List<CommentByPlaceResponse> findCommentByPlace(Integer placeId);
 }

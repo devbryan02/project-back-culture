@@ -50,10 +50,11 @@ public class SecurityConfig {
                     //Endpoint publicos
                     request.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     request.requestMatchers("/place/**").permitAll();
+                    request.requestMatchers("/comment/place").permitAll();
 
                     //Endpoints privados
                     request.requestMatchers("/category/**").hasRole("ADMIN");
-                    request.requestMatchers("/comment/**").hasRole("USER");
+                    request.requestMatchers(HttpMethod.POST,"/comment/create").hasRole("USER");
                     request.requestMatchers("/favority/**").hasRole("USER");
                     request.requestMatchers("/image/**").hasRole("ADMIN");
                     request.requestMatchers("/qualification/**").hasRole("USER");

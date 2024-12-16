@@ -10,6 +10,7 @@ import com.project.projectbackculture.persistence.repository.PlaceRepository;
 import com.project.projectbackculture.persistence.repository.UserRepository;
 import com.project.projectbackculture.service.interfaces.ComentService;
 import com.project.projectbackculture.web.request.NewCommentRequest;
+import com.project.projectbackculture.web.response.CommentByPlaceResponse;
 import com.project.projectbackculture.web.response.CommentResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -88,6 +89,19 @@ public class CommentServiceImpl implements ComentService {
     public void checkExistingComment(Integer userId, Integer placeId) {
         boolean exists = commentRepository.existsByUserUserIdAndPlacePlaceId(userId, placeId);
         if(exists) throw new CustomException("The user commenr already exists");
+    }
+
+    @Override
+    @Transactional
+    public List<CommentByPlaceResponse> findCommentByPlace(Integer placeId) {
+
+        if(placeId == null) throw new CustomException("PlaceId is required");
+
+        List<CommentModel> commentModels  = commentRepository.findCommentByPlaceId(placeId);
+
+        return commentModels.stream()
+                .map(CommentMapper::toResponseCommentByPlace)
+                .toList();
     }
 
     @Override

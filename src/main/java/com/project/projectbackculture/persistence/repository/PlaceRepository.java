@@ -29,7 +29,7 @@ public interface PlaceRepository extends JpaRepository<PlaceModel, Integer> {
     // Listar lugares por categoria
     @Query("SELECT p FROM PlaceModel p " +
             "INNER JOIN p.categories c " +
-            "WHERE c.categoryName = :category " +
+            "WHERE c.categoryName = LOWER(:category) " +
             "GROUP BY p " +
             "ORDER BY  p.placeId")
     List<PlaceModel> findPlaceByCategory(String category);
