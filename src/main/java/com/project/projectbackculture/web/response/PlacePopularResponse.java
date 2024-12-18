@@ -7,6 +7,7 @@ public record PlacePopularResponse(
         Integer placeId,
         String name,
         String location,
+        String district,
         String urlImage,
         double punctuationAverage
 ) { }

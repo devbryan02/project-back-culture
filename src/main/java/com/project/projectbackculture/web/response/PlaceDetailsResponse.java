@@ -10,6 +10,7 @@ public record PlaceDetailsResponse(
         String name,
         String location,
         String descripcion,
+        String district,
         Double qualificationAverage,
         List<String> images
 ) {

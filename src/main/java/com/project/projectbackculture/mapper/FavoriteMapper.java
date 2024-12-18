@@ -38,7 +38,7 @@ public class FavoriteMapper {
 
         return UserFavorityResponse.builder()
                 .placeId(placeModel.getPlaceId())
-                .namePlace(placeModel.getName())
+                .name(placeModel.getName())
                 .description(placeModel.getDescription())
                 .location(placeModel.getLocation())
                 .distance(placeModel.getDistance())

@@ -38,10 +38,11 @@ public class ProjectBackCultureApplication {
             //Permisos por defecto para un ADMIN
             final PermissionModel CREATE = PermissionModel.builder().name("CREATE").build();
             final PermissionModel REPORT = PermissionModel.builder().name("REPORT").build();
+            final PermissionModel SAVE = PermissionModel.builder().name("SAVE").build();
 
             //Rol de ADMIN
             final RoleModel ADMIN = RoleModel.builder().role(RoleEnum.ADMIN)
-                    .permissions(Set.of(CREATE, REPORT)).build();
+                    .permissions(Set.of(CREATE, REPORT, SAVE)).build();
 
             final UserModel USER_ADMIN = UserModel.builder().username("admin")
                     .username(username)

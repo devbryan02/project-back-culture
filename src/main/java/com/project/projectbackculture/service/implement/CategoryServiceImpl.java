@@ -9,6 +9,7 @@ import com.project.projectbackculture.persistence.model.CategoryModel;
 import com.project.projectbackculture.persistence.repository.CategoryRepository;
 import com.project.projectbackculture.service.interfaces.CategoryService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -91,5 +92,10 @@ public class CategoryServiceImpl implements CategoryService {
     public void validateUniqueConstrain(NewCategoryRequest newCategoryRequest) {
         if(categoryRepository.existsByCategoryName(newCategoryRequest.categoryName()))
             throw new CustomException("La categoria "+newCategoryRequest.categoryName()+" ya existe");
+    }
+
+    public static void main(String[] args) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.encode("bryan123"));
     }
 }

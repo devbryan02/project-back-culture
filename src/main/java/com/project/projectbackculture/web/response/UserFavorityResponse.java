@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record UserFavorityResponse(
         Integer placeId,
-        String namePlace,
+        String name,
         String description,
         String location,
         String distance,
