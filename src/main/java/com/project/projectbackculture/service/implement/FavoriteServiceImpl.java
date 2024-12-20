@@ -10,6 +10,7 @@ import com.project.projectbackculture.persistence.repository.PlaceRepository;
 import com.project.projectbackculture.persistence.repository.UserRepository;
 import com.project.projectbackculture.service.interfaces.FavoriteService;
 import com.project.projectbackculture.web.request.NewFavoriteRequest;
+import com.project.projectbackculture.web.response.DeleteFavoriteResponse;
 import com.project.projectbackculture.web.response.FavoriteResponse;
 import com.project.projectbackculture.web.response.UserFavorityResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -105,6 +106,34 @@ public class FavoriteServiceImpl implements FavoriteService {
         return placeModelList.stream()
                 .map(FavoriteMapper::favorityPlaceByUserResponse)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public DeleteFavoriteResponse deleteFavorite(String username, Integer placeId) {
+
+        try{
+            if(username == null) throw new CustomException("username is required");
+            if(placeId == null) throw new CustomException("placeId is required");
+
+            UserModel userModel = findByUsername(username);
+            PlaceModel placeModel = findByPlaceId(placeId);
+
+            favoriteRepository.deleteByUserUsernameAndPlacePlaceId(userModel.getUsername(),
+                    placeModel.getPlaceId());
+
+            return DeleteFavoriteResponse.builder()
+                    .message("Lugar eliminado de favoritos")
+                    .success(true)
+                    .build();
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return DeleteFavoriteResponse.builder()
+                    .message("Error al eliminar favorito")
+                    .success(false)
+                    .build();
+        }
     }
 
     @Override

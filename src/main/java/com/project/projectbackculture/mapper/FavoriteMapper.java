@@ -3,6 +3,7 @@ package com.project.projectbackculture.mapper;
 import com.project.projectbackculture.persistence.model.FavoriteModel;
 import com.project.projectbackculture.persistence.model.ImageModel;
 import com.project.projectbackculture.persistence.model.PlaceModel;
+import com.project.projectbackculture.web.response.DeleteFavoriteResponse;
 import com.project.projectbackculture.web.response.FavoriteResponse;
 import com.project.projectbackculture.web.response.UserFavorityResponse;
 
@@ -45,6 +46,4 @@ public class FavoriteMapper {
                 .urlImage(imageUrl)
                 .build();
     }
-
-
 }

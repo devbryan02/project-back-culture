@@ -16,4 +16,5 @@ public interface FavoriteRepository extends JpaRepository<FavoriteModel, Integer
 
     @Query("SELECT f.place FROM FavoriteModel f WHERE f.user.username = :username")
     List<PlaceModel> findPlacesByUsername(String username);
+    void deleteByUserUsernameAndPlacePlaceId(String username, Integer placeId);
 }

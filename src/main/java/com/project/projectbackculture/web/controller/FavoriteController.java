@@ -1,6 +1,7 @@
 package com.project.projectbackculture.web.controller;
 
 import com.project.projectbackculture.service.implement.FavoriteServiceImpl;
+import com.project.projectbackculture.web.response.DeleteFavoriteResponse;
 import com.project.projectbackculture.web.response.FavoriteResponse;
 import com.project.projectbackculture.web.response.UserFavorityResponse;
 import org.springframework.http.HttpStatus;
@@ -33,4 +34,11 @@ public class FavoriteController {
         return new ResponseEntity<>(favorities, HttpStatus.OK);
     }
 
+    @DeleteMapping()
+    public ResponseEntity<DeleteFavoriteResponse> deleteFavorite(
+            @RequestParam String username,
+            @RequestParam Integer placeId){
+        var deleteFavoriteResponse = favoriteService.deleteFavorite(username, placeId);
+        return new ResponseEntity<>(deleteFavoriteResponse, HttpStatus.OK);
+    }
 }

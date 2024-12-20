@@ -47,8 +47,8 @@ public class UserModel {
     // Relacion de uno a muchos con favorito
     @OneToMany(
             targetEntity = FavoriteModel.class,
-            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
+            cascade = CascadeType.REMOVE,
             mappedBy = "user"
     )
     @Builder.Default

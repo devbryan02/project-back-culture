@@ -3,6 +3,7 @@ package com.project.projectbackculture.service.interfaces;
 import com.project.projectbackculture.persistence.model.PlaceModel;
 import com.project.projectbackculture.persistence.model.UserModel;
 import com.project.projectbackculture.web.request.NewFavoriteRequest;
+import com.project.projectbackculture.web.response.DeleteFavoriteResponse;
 import com.project.projectbackculture.web.response.FavoriteResponse;
 import com.project.projectbackculture.web.response.UserFavorityResponse;
 
@@ -18,5 +19,6 @@ public interface FavoriteService extends ServiceGeneral<FavoriteResponse,NewFavo
     PlaceModel findByPlaceId(Integer placeId);
     void validateIDRequest(String username, Integer placeId);
     List<UserFavorityResponse> findFavouritesByUsername(String username);
+    DeleteFavoriteResponse deleteFavorite (String username, Integer placeId);
 
 }
