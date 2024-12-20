@@ -197,6 +197,124 @@ API que permite acceder y gestionar información sobre el patrimonio cultural, h
 ]
 ```
 
+## Ejemplos de Uso 🚀
+
+### Ejemplos con cURL
+
+#### Registrar un nuevo usuario
+```bash
+curl -X POST http://api-url/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "username": "johndoe",
+    "password": "mySecurePassword123",
+    "fullName": "John Doe"
+  }'
+```
+
+#### Iniciar sesión
+```bash
+curl -X POST http://api-url/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "jimm005",
+    "password": "mySecurePassword123"
+  }'
+```
+
+#### Agregar a favoritos
+```bash
+curl -X POST "http://api-url/api/v1/favority?username=johndoe&placeId=123" \
+  -H "Content-Type: application/json"
+```
+
+### Ejemplos con JavaScript (Fetch)
+
+#### Registrar usuario
+```javascript
+fetch('http://api-url/api/v1/auth/register', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    email: 'user@example.com',
+    username: 'johndoe',
+    password: 'mySecurePassword123',
+    fullName: 'John Doe'
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data));
+```
+
+#### Agregar a favoritos
+```javascript
+fetch(`http://api-url/api/v1/favority?username=johndoe&placeId=123`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data));
+```
+
+### Ejemplos con Axios
+
+#### Registrar usuario
+```javascript
+axios.post('http://api-url/api/v1/auth/register', {
+  email: 'user@example.com',
+  username: 'johndoe',
+  password: 'mySecurePassword123',
+  fullName: 'John Doe'
+})
+.then(response => console.log(response.data));
+```
+
+#### Agregar a favoritos
+```javascript
+axios.post('http://api-url/api/v1/favority', null, {
+  params: {
+    username: 'johndoe',
+    placeId: 123
+  }
+})
+.then(response => console.log(response.data));
+```
+
+### Ejemplos con Python (requests)
+
+#### Registrar usuario
+```python
+import requests
+
+url = "http://api-url/api/v1/auth/register"
+data = {
+    "email": "user@example.com",
+    "username": "johndoe",
+    "password": "mySecurePassword123",
+    "fullName": "John Doe"
+}
+response = requests.post(url, json=data)
+print(response.json())
+```
+
+#### Agregar a favoritos
+```python
+import requests
+
+url = "http://api-url/api/v1/favority"
+params = {
+    "username": "johndoe",
+    "placeId": 123
+}
+response = requests.post(url, params=params)
+print(response.json())
+```
+
 ## Consideraciones Importantes 🛡️
 
 ### Autenticación
@@ -219,5 +337,6 @@ API que permite acceder y gestionar información sobre el patrimonio cultural, h
 - Implementar caché para consultas frecuentes
 - Usar paginación para grandes conjuntos de datos
 - Mantener consistencia en formatos de respuesta
+
 
 *Última actualización: Diciembre 2024*
