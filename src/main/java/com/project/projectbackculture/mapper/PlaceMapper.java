@@ -28,7 +28,7 @@ public class PlaceMapper {
                 .name(placeModel.getName())
                 .description(placeModel.getDescription())
                 .location(placeModel.getLocation())
-                .district(placeModel.getDistrict())
+                .provicnce(placeModel.getProvince())
                 .distance(placeModel.getDistance())
                 .urlImage(imageUrl)
                 .build();
@@ -53,7 +53,7 @@ public class PlaceMapper {
                 .placeId(placeModel.getPlaceId())
                 .name(placeModel.getName())
                 .location(placeModel.getLocation())
-                .district(placeModel.getDistrict())
+                .province(placeModel.getProvince())
                 .urlImage(imageUrl)
                 .punctuationAverage(roundedAverage)
                 .build();
@@ -71,7 +71,7 @@ public class PlaceMapper {
                 .placeId(placeModel.getPlaceId())
                 .name(placeModel.getName())
                 .location(placeModel.getLocation())
-                .district(placeModel.getDistrict())
+                .province(placeModel.getProvince())
                 .descripcion(placeModel.getDescription())
                 .qualificationAverage(placeModel.getPunctuationAverage())
                 .images(images)
@@ -91,5 +91,4 @@ public class PlaceMapper {
                 .distance(request.distance())
                 .build();
     }
-
 }

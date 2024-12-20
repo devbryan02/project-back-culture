@@ -52,4 +52,11 @@ public class PlaceController {
         List<PlaceResponse> placeResponseList = placeService.findPlaceByCategory(category);
         return new ResponseEntity<>(placeResponseList, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/filter/{category}/province/{province}")
+    public ResponseEntity<List<PlacePopularResponse>> findPlaceByCategoryAndProvince(
+            @PathVariable String category, @PathVariable String province){
+        var placeResponseList = placeService.findPlaceByCategoryAndProvince(category, province);
+        return new ResponseEntity<>(placeResponseList, HttpStatus.OK);
+    }
 }

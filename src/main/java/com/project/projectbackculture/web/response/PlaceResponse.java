@@ -9,7 +9,7 @@ public record PlaceResponse(
         String name,
         String description,
         String location,
-        String district,
+        String provicnce,
         String distance,
         String urlImage
 ) { }

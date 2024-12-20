@@ -23,7 +23,7 @@ public class PlaceModel {
     private String description;
     private String location;
     private String distance;
-    private String district;
+    private String province;
     private boolean isVisible;
 
 

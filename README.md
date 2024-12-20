@@ -8,15 +8,9 @@ API que permite acceder y gestionar información sobre el patrimonio cultural, h
 - Servir como recurso para desarrolladores e investigadores
 
 ## Convenciones de la API 🔧
-
 - Todas las rutas comienzan con el prefijo `/api/v1`
 - Las respuestas son en formato JSON
 - Los IDs son parámetros de ruta usando la notación `/{id}`
-- Los métodos HTTP siguen las convenciones REST:
-  - POST: Crear recursos
-  - GET: Obtener recursos
-  - PATCH: Actualizar recursos parcialmente
-  - DELETE: Eliminar recursos
 
 ## Controladores de API
 
@@ -25,8 +19,6 @@ API que permite acceder y gestionar información sobre el patrimonio cultural, h
 
 #### Registro de Usuario
 **Endpoint:** `POST /register`
-
-**Descripción:** Registra un nuevo usuario en el sistema.
 
 **Request Body:**
 ```json
@@ -41,8 +33,6 @@ API que permite acceder y gestionar información sobre el patrimonio cultural, h
 #### Inicio de Sesión
 **Endpoint:** `POST /login`
 
-**Descripción:** Autentica a un usuario existente.
-
 **Request Body:**
 ```json
 {
@@ -54,10 +44,10 @@ API que permite acceder y gestionar información sobre el patrimonio cultural, h
 **Response Exitoso:**
 ```json
 {
-  "username": "usuarioEjemplo",
-  "message": "Inicio de sesión exitoso",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "success": true
+    "username": "usuarioEjemplo",
+    "message": "Inicio de sesión exitoso",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "success": true
 }
 ```
 
@@ -67,119 +57,167 @@ API que permite acceder y gestionar información sobre el patrimonio cultural, h
 #### Obtener Lugares Populares
 **Endpoint:** `GET /popular`
 
-**Descripción:** Recupera los lugares más populares, ordenados por puntuación.
-
-**Respuesta Exitosa:**
+**Response Exitoso:**
 ```json
 [
-  {
-    "placeId": 1,
-    "name": "Nombre del lugar",
-    "location": "Ubicación del lugar", 
-    "urlImage": "https://example.com/image.jpg",
-    "punctuationAverage": 4.5
-  }
+    {
+        "placeId": 1,
+        "name": "Nombre del lugar",
+        "location": "Ubicación del lugar", 
+        "urlImage": "https://example.com/image.jpg",
+        "punctuationAverage": 4.5
+    }
 ]
 ```
 
 #### Detalles de un Lugar
 **Endpoint:** `GET /{id}`
 
-**Descripción:** Obtiene los detalles completos de un lugar específico.
-
-**Respuesta Exitosa:**
+**Response Exitoso:**
 ```json
 {
-  "placeId": 1,
-  "name": "Nombre del lugar",
-  "location": "Ubicación del lugar",
-  "descripcion": "Descripción detallada del lugar",
-  "qualificationAverage": 4.5,
-  "images": [
-    "https://example.com/image1.jpg",
-    "https://example.com/image2.jpg"
-  ]
+    "placeId": 1,
+    "name": "Nombre del lugar",
+    "location": "Ubicación del lugar",
+    "descripcion": "Descripción detallada del lugar",
+    "qualificationAverage": 4.5,
+    "images": [
+        "https://example.com/image1.jpg",
+        "https://example.com/image2.jpg"
+    ]
 }
 ```
 
 #### Búsqueda de Lugares
 **Endpoint:** `GET /search`
 
-**Descripción:** Busca lugares por palabra clave.
-
 **Parámetros:**
 - `keyword`: Palabra clave de búsqueda
 
-**Respuesta Exitosa:**
+**Response Exitoso:**
 ```json
 [
-  {
-    "placeId": 1,
-    "name": "Nombre del lugar",
-    "location": "Ubicación del lugar", 
-    "urlImage": "https://example.com/image.jpg",
-    "punctuationAverage": 4.5
-  }
+    {
+        "placeId": 1,
+        "name": "Nombre del lugar",
+        "location": "Ubicación del lugar", 
+        "urlImage": "https://example.com/image.jpg",
+        "punctuationAverage": 4.5
+    }
 ]
 ```
 
 #### Lugares por Categoría
 **Endpoint:** `GET filter/{category}`
 
-**Descripción:** Recupera lugares filtrados por categoría.
-
-**Respuesta Exitosa:**
+**Response Exitoso:**
 ```json
 [
-  {
-    "placeId": 1,
-    "name": "Nombre del lugar",
-    "location": "Ubicación del lugar", 
-    "urlImage": "https://example.com/image.jpg",
-    "punctuationAverage": 4.5,
-    "category": "Categoría del lugar"
-  }
+    {
+        "placeId": 1,
+        "name": "Nombre del lugar",
+        "location": "Ubicación del lugar", 
+        "urlImage": "https://example.com/image.jpg",
+        "punctuationAverage": 4.5,
+        "category": "Categoría del lugar"
+    }
+]
+```
+
+#### Lugares por Categoría y Provincia
+**Endpoint:** `GET filter/{category}/province/{province}`
+
+**Parámetros:**
+- `category`: Categoría del lugar
+- `province`: Provincia donde se encuentra el lugar
+
+**Response Exitoso:**
+```json
+[
+    {
+        "placeId": 1,
+        "name": "Plaza Mayor",
+        "location": "Centro histórico, Ayacucho",
+        "province": "Ayacucho Centro",
+        "urlImage": "http://example.com/image1.jpg",
+        "punctuationAverage": 4.5
+    },
+    {
+        "placeId": 2,
+        "name": "Museo de Arte de Ayacucho",
+        "location": "Avenida Los Andes, Ayacucho",
+        "province": "Ayacucho Norte",
+        "urlImage": "http://example.com/image2.jpg",
+        "punctuationAverage": 4.7
+    }
+]
+```
+
+### 3. FavoriteController
+**Base URL:** `/api/v1/favority`
+
+#### Agregar Favorito
+**Endpoint:** `POST /`
+
+**Parámetros:**
+- `username`: Nombre de usuario
+- `placeId`: ID del lugar a agregar a favoritos
+
+**Response Exitoso:**
+```json
+{
+    "favoriteId": 1,
+    "username": "johndoe",
+    "placeId": 123,
+    "message": "Lugar agregado a favoritos"
+}
+```
+
+#### Obtener Favoritos de Usuario
+**Endpoint:** `GET /user`
+
+**Parámetros:**
+- `username`: Nombre de usuario del cual se quieren obtener los favoritos
+
+**Response Exitoso:**
+```json
+[
+    {
+        "favoriteId": 1,
+        "placeId": 123,
+        "placeName": "Nombre del lugar",
+        "urlImage": "https://example.com/image.jpg"
+    },
+    {
+        "favoriteId": 2,
+        "placeId": 124,
+        "placeName": "Otro lugar",
+        "urlImage": "https://example.com/image2.jpg"
+    }
 ]
 ```
 
 ## Consideraciones Importantes 🛡️
 
 ### Autenticación
-- Hasta este momento de desarrollo ningun endpoint requiere autenticacion(mas adelante si)
-- Usar token JWT proporcionado en el login
-- Incluir token en header `Authorization: Bearer {token}`
+- Hasta este momento de desarrollo ningún endpoint requiere autenticación
+- En futuras versiones se implementará autenticación JWT
+- El token JWT deberá incluirse en el header `Authorization: Bearer {token}`
 
 ### Manejo de Errores
 - Códigos de estado HTTP estándar
 - Mensajes de error descriptivos
 - Validación de entrada de datos
 
-### Buenas Prácticas
-- Implementar caché para consultas frecuentes
-- Usar paginación para grandes conjuntos de datos
-- Mantener consistencia en formatos de respuesta
-
-## Ejemplos de Uso 🚀
-
-### Obtener Lugares Populares
-```bash
-GET /api/v1/place/popular
-```
-
-### Buscar Lugar por ID
-```bash
-GET /api/v1/place/1
-```
-
-### Buscar Lugares
-```bash
-GET /api/v1/place/search?keyword=ayacucho
-```
-
-## Errores Comunes 🚨
+### Errores Comunes 🚨
 - **400 Bad Request:** Parámetros inválidos
 - **401 Unauthorized:** Credenciales incorrectas
 - **404 Not Found:** Recurso no encontrado
 - **500 Internal Server Error:** Errores del servidor
+
+### Buenas Prácticas
+- Implementar caché para consultas frecuentes
+- Usar paginación para grandes conjuntos de datos
+- Mantener consistencia en formatos de respuesta
 
 *Última actualización: Diciembre 2024*
