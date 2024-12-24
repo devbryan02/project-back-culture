@@ -112,13 +112,13 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     @Transactional
-    public List<PlacePopularResponse> findPlaceByCategoryAndProvince(String category, String province) {
+    public List<PlacePopularResponse> findPlaceByProvince(String province) {
 
-        if(category == null || category.isEmpty() && province == null || province.isEmpty())
+        if(province == null || province.isEmpty())
             throw new CustomException("category param is required");
 
-        var placeList = placeRepository.findPlaceModelByCategoryAndProvince(category, province);
-        log.info("place con la categoria {} y provincia {} {}",category, province, placeList);
+        var placeList = placeRepository.findPlaceByProvince(province);
+        log.info("place con la provincia {}", placeList);
 
         return placeList.stream()
                 .map(PlaceMapper::toPopularResponse)

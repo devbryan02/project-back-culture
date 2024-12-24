@@ -18,6 +18,6 @@ public interface PlaceService extends ServiceGeneral<PlaceResponse,NewPlaceReque
     PlaceDetailsResponse getPlaceDetailsById(Integer placeId);
     List<PlaceResponse> searchByKeyword(String keyword);
     List<PlaceResponse> findPlaceByCategory(String category);
-    List<PlacePopularResponse> findPlaceByCategoryAndProvince(String category, String province);
+    List<PlacePopularResponse> findPlaceByProvince(String province);
 
 }
