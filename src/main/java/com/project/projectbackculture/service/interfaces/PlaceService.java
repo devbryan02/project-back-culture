@@ -19,5 +19,6 @@ public interface PlaceService extends ServiceGeneral<PlaceResponse,NewPlaceReque
     List<PlaceResponse> searchByKeyword(String keyword);
     List<PlaceResponse> findPlaceByCategory(String category);
     List<PlacePopularResponse> findPlaceByProvince(String province);
+    List<PlacePopularResponse> findPlaceByCategoryAndProvince(String category, String province);
 
 }

@@ -126,6 +126,17 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
+    @Transactional
+    public List<PlacePopularResponse> findPlaceByCategoryAndProvince(
+            String category, String province) {
+        var placeList = placeRepository.findPlaceByCategoryAndProvince(category, province);
+        log.info("place con la categoria {} y provincia {} {}", category, province, placeList);
+        return placeList.stream()
+                .map(PlaceMapper::toPopularResponse)
+                .toList();
+    }
+
+    @Override
     public PlaceResponse update(NewPlaceRequest request, Integer id) {
         throw new UnsupportedOperationException("Not yet implemented");
     }

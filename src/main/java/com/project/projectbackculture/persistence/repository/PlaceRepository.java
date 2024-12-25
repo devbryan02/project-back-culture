@@ -36,10 +36,19 @@ public interface PlaceRepository extends JpaRepository<PlaceModel, Integer> {
 
     //listar lugares por provincia
     @Query("SELECT p FROM PlaceModel p " +
-            "WHERE LOWER(p.province) = LOWER(:province) " +
+            "WHERE LOWER(p.province) = LOWER(:province)" +
             "GROUP BY p " +
             "ORDER BY  p.placeId")
     List<PlaceModel> findPlaceByProvince(String province);
+
+    //listar lugares por categoria y provincia
+    @Query("SELECT p FROM PlaceModel p " +
+            "INNER JOIN p.categories c " +
+            "WHERE LOWER(c.categoryName) = LOWER(:category) " +
+            "AND LOWER(p.province) = LOWER(:province) " +
+            "GROUP BY p " +
+            "ORDER BY  p.placeId")
+    List<PlaceModel> findPlaceByCategoryAndProvince(String category, String province);
 }
 
 
