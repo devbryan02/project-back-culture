@@ -53,7 +53,7 @@ public class PlaceController {
         return new ResponseEntity<>(placeResponseList, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/filter")
+    @GetMapping()
     public ResponseEntity<List<PlacePopularResponse>> findPlaceByCategoryAndProvince(
             @RequestParam String province){
         var placeResponseList = placeService.findPlaceByProvince(province);
